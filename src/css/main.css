@@ -1,0 +1,71 @@
+@import url("layout/nav.css");
+@import url("layout/menu.css");
+@import url("layout/content.css");
+@font-face {
+    font-family: inherit;
+    src: url(../assets/fonts/notosans-regular.2cb88a13.woff2);
+}
+
+@font-face {
+    font-family: italic;
+    src: url(../assets/fonts/notosans-italic.1c1aaac9.woff2);
+}
+
+@font-face {
+    font-family: regular;
+    src: url(../assets/fonts/notosans-regular.2cb88a13.woff2);
+}
+
+@font-face {
+    font-family: semibold;
+    src: url(../assets/fonts/notosans-semibold.df3e6dc4.woff2);
+}
+
+body,
+html {
+    font-size: 14px;
+    font-family: regular;
+}
+
+body {
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    background: #f4f5f8;
+    /* overflow-x: auto; */
+    min-width: 1366px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --button-primary-normal-bg-color: #02a3ec;
+    --button-primary-color: #fff;
+    --button-primary-normal-border-color: #02a3ec;
+    --border-color: #e7e8e9;
+    --input-hover-border-color: #02a3ec;
+}
+
+.main-right {
+    transition: padding .2s;
+    height: calc(100vh - 56px);
+    background-color: #f5f8f9;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-view {
+    min-width: 500px;
+    min-height: 500px;
+    height: 100%;
+}
+
+.main-content {
+    height: 100%;
+    margin-left: -6px;
+}

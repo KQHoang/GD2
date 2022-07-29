@@ -1,0 +1,119 @@
+.content-setting {}
+
+.w-full {
+    width: 100%!important;
+}
+
+.h-full {
+    height: 100%!important;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.body-custom {
+    width: calc(100vw - 194px);
+    overflow: auto;
+    padding: 16px 24px;
+}
+
+.content-header {}
+
+.p-b-16 {
+    padding-bottom: 16px!important;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.header-custom {
+    margin: 0;
+}
+
+.font-20 {
+    font-size: 20px !important;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.mi-push-white {
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+    -webkit-mask-position: -240px 0;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #fff!important;
+}
+
+
+/* phần content main */
+
+.content-main {
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    height: 100%!important;
+    background: rgb(255, 255, 255);
+    height: calc(100vh - 148px);
+}
+
+.h-full {
+    height: 100% !important;
+}
+
+
+/* w-full
+items-center  */
+
+.bg-white {
+    background: #fff;
+}
+
+.input-search-user {}
+
+.m-l-12 {
+    margin-left: 12px!important;
+}
+
+.ms-input {
+    height: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 3.5px;
+    background: #fff;
+    min-height: 36px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ms-input:hover {
+    border: 1px solid var(--input-hover-border-color);
+}
+
+.p-l-8 {
+    padding-left: 8px!important;
+}
+
+.ms-icon {}
+
+
+/* mi-search */
+
+.ms-input-item {
+    height: 100%;
+    border: none;
+    width: 100%;
+    padding: 0 12px;
+    outline: none;
+}
