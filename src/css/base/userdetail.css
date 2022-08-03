@@ -1,0 +1,160 @@
+.detail-preview-user {
+    position: absolute;
+    top: -2px;
+    right: 0;
+    height: 101%;
+    width: 40%;
+    background-color: #fff;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+    z-index: 8;
+}
+
+.content-user {
+    padding: 24px;
+}
+
+.mi-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+    -webkit-mask-position: -216px -24px;
+    -webkit-mask-repeat: no-repeat;
+    background-color: var(--icon-deault-color)!important;
+}
+
+.ms-row-detail {
+    display: flex;
+    width: 100%;
+    line-height: 35px;
+    text-indent: 0px;
+    padding: 0px;
+    margin-bottom: 16px;
+    clear: both;
+    flex-flow: wrap;
+}
+
+.icon-detail {
+    margin-left: 0%;
+    width: 16.6667%;
+}
+
+.user-detail-info {
+    margin-left: 0%;
+    width: 75%;
+}
+
+.status-detail {}
+
+.pos-relative {
+    position: relative;
+}
+
+.icon-dot-detail {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    left: 0;
+    top: 13px;
+    background-color: rgb(102, 209, 129);
+}
+
+.active-detail {
+    color: #66d181;
+}
+
+.p-l-16 {
+    padding-left: 16px;
+}
+
+.body-preview {
+    height: 400px;
+    overflow: auto;
+    width: 100%;
+}
+
+.detail-work-info {
+    margin-top: 20px;
+}
+
+.prop-detail-name {
+    margin-left: 0%;
+    width: 29.1667%;
+}
+
+.prop-detail-value {
+    margin-left: 0%;
+    width: 50%;
+}
+
+.value-border-bottom {
+    border-bottom: 1px solid rgb(231, 232, 233);
+}
+
+.m-t-20 {
+    margin-top: 20px;
+}
+
+.grid-container-detail {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    text-indent: 0;
+    border: none;
+}
+
+.role-detail {
+    opacity: 1;
+    height: auto;
+}
+
+.datagrid {
+    width: 100%;
+    color: #333;
+    background-color: #fff;
+    line-height: inherit;
+    osition: relative;
+    cursor: default;
+    white-space: normal;
+}
+
+.grid-base-container {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    height: 100%;
+    min-height: inherit;
+    max-height: inherit;
+}
+
+.datagrid-detail-header {
+    padding-right: 0px;
+    background: #fff!important;
+    border-bottom: 1px solid #e2e8f0;
+    color: #171B2A;
+    font-weight: 400;
+    -ms-touch-action: pinch-zoom;
+    touch-action: pinch-zoom;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    outline: 0;
+    white-space: nowrap;
+}
+
+.datagrid-detail-hover:hover {
+    background-color: #dbf4ff !important;
+}
+
+.p-16 {
+    padding: 0 16px;
+}
+
+.line-height-48 {
+    line-height: 48px;
+}

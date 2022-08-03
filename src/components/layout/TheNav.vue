@@ -49,7 +49,7 @@
                 <div class="right-action user">
                     <div class="user-avatar">
                         <div class="apui-user-avatar">
-                            <img src="" alt="">
+                            <img src="../../assets/img/anh1.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -58,20 +58,3 @@
     </div>
 </template>
 
-<!-- <script>
-import MsButton from "../base/Button.vue"
-export default {
-    components: {
-    MsButton,
-},
-    data(){
-        return{
-            s: "Quang Hoàng"
-        }
-    },
-    methods: {
-       
-    
-    },
-}
-</script> -->

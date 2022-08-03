@@ -1,7 +1,21 @@
 @import url("layout/nav.css");
 @import url("layout/menu.css");
 @import url("layout/content.css");
-@font-face {
+@import url("base/selectbox.css");
+@import url("base/scrollbar.css");
+@import url("base/tableuser.css");
+@import url("base/pagination.css");
+@import url("base/popup.css");
+@import url("base/button.css");
+@import url("base/userdetail.css");
+@import url("base/checkbox.css");
+@import url("base/adduser.css");
+@import url("base/dropdown.css");
+
+/* @import url("base/tableuser.css"); */
+
+
+/* @font-face {
     font-family: inherit;
     src: url(../assets/fonts/notosans-regular.2cb88a13.woff2);
 }
@@ -19,26 +33,35 @@
 @font-face {
     font-family: semibold;
     src: url(../assets/fonts/notosans-semibold.df3e6dc4.woff2);
-}
+} */
 
 body,
 html {
-    font-size: 14px;
-    font-family: regular;
+    width: 100%;
+    height: 100%;
+    /* font-family: regular !important; */
 }
 
 body {
-    color: #2c3e50;
+    color: #2c3e50 !important;
     margin: 0;
     padding: 0;
     background: #f4f5f8;
-    /* overflow-x: auto; */
+    overflow-x: auto;
     min-width: 1366px;
+    overflow-y: hidden;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
 }
 
 * {
     box-sizing: border-box;
 }
+
+
+/* * {
+    box-sizing: border-box;
+} */
 
 :root {
     --button-primary-normal-bg-color: #02a3ec;
@@ -46,6 +69,9 @@ body {
     --button-primary-normal-border-color: #02a3ec;
     --border-color: #e7e8e9;
     --input-hover-border-color: #02a3ec;
+    --text-primary-color: #171b2a;
+    --icon-deault-color: #686c7b;
+    --dropdown-item-hover: #eff1f6;
 }
 
 .main-right {

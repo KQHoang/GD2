@@ -117,3 +117,24 @@ items-center  */
     padding: 0 12px;
     outline: none;
 }
+
+.su-filter {
+    margin-left: auto;
+}
+
+.m-r-16 {
+    margin-right: 16px !important;
+}
+
+.m-0 {
+    margin: 0!important;
+}
+
+.mi-setting {
+    background-color: #606474!important;
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+    -webkit-mask-position: -264px -144px;
+    -webkit-mask-repeat: no-repeat;
+}

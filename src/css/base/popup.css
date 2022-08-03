@@ -1,0 +1,244 @@
+.ms-component {}
+
+.con-ms-popup {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.ms-popup-primary {}
+
+.flex-column {
+    flex-direction: column!important;
+}
+
+.ms-popup--background {
+    width: 100%;
+    background: rgba(0, 0, 0, .4);
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+    opacity: 1;
+}
+
+.ms-popup {
+    background: rgb(255, 255, 255);
+    width: 415px;
+    min-width: 500px;
+}
+
+.con-ms-popup .ms-popup {
+    position: relative;
+    z-index: 100;
+    width: 600px;
+    max-width: calc(100% - 30px);
+    max-height: calc(100% - 4px);
+    border-radius: 6px;
+    box-shadow: 0 5px 20px 0 rgb(0 0 0 / 10%);
+    background: #fff;
+    -webkit-animation: rebound .3s;
+    animation: rebound .3s;
+    overflow: visible;
+}
+
+.ms-popup--header {
+    height: 53px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px 8px;
+    position: relative;
+    padding: 24px;
+    padding-bottom: 0;
+    padding-top: 18px!important;
+    min-height: 53px!important;
+}
+
+.ms-popup--content {
+    overflow: auto;
+    height: calc(100% - 60px);
+    padding: 24px;
+}
+
+.ms-popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    background: #f2f2f2;
+    padding: 12px 24px;
+    border-radius: 0 0 8px 8px;
+    height: 60px;
+}
+
+.popup-notitification {
+    background: rgb(255, 255, 255);
+    width: 415px !important;
+    min-width: 500px;
+}
+
+.popup-edit-user {
+    background: rgb(255, 255, 255);
+    width: 600px !important;
+    min-width: 500px;
+    height: auto;
+}
+
+
+/* header */
+
+.ms-popup--title {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    align-items: center;
+    overflow: visible;
+    min-height: 29px!important;
+}
+
+.ms-popup--title h2 {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.ms-title--span {
+    letter-spacing: 0.576px;
+    font-size: 24px;
+    color: rgb(33, 33, 33);
+}
+
+.ms-popup--close {
+    position: relative;
+    right: -8px;
+}
+
+.mi-close-2 {
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+    -webkit-mask-position: -216px -24px;
+    -webkit-mask-repeat: no-repeat;
+    background-color: var(--icon-deault-color)!important;
+}
+
+
+/* footer */
+
+.m-r-12 {
+    margin-right: 12px;
+}
+
+
+/* content edit */
+
+.item-wrap {}
+
+.avatar {
+    width: 66px;
+    height: 66px;
+}
+
+.user-information {
+    color: #1f1f20;
+}
+
+.m-t-4 {
+    margin-top: 4px;
+}
+
+.m-b-4 {
+    margin-bottom: 4px!important;
+}
+
+.required {
+    float: inherit;
+    color: #e54848;
+    padding-left: 2px;
+}
+
+.ms-row-role {
+    display: flex;
+    width: 100%;
+    line-height: 35px;
+    text-indent: 0px;
+    padding: 0px;
+    margin-bottom: 16px;
+    clear: both;
+    flex-flow: wrap;
+}
+
+.lab-role {
+    color: #1B1C1E;
+}
+
+.ms-role-checkbox {
+    margin-left: 0;
+    width: 50%;
+}
+
+.ms-checkbox-container {
+    position: relative;
+    padding: 1px 0 0 32px;
+    cursor: pointer;
+    height: 100%;
+    margin-bottom: 4px;
+}
+
+.ms-checkbox .ms-checkbox--input {
+    height: inherit;
+}
+
+.ms-checkbox--input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.ms-checkbox .checkmark {
+    top: 0;
+}
+
+.checkmark {
+    position: absolute;
+    left: 0;
+    height: 26px;
+    width: 22px;
+}
+
+.icon-square-uncheck {
+    -webkit-mask-position: -532px 2px;
+    -webkit-mask-image: url(../../assets/img/Icon_process.1401a69c.svg);
+    -webkit-mask-repeat: no-repeat;
+    background-color: #686c7b!important;
+}
+
+.ms-role-checkbox {}
+
+.con-slot-label {
+    text-overflow: ellipsis!important;
+    display: -webkit-box!important;
+    -webkit-box-orient: vertical!important;
+    font-weight: 400;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.label-role-checkbox {
+    margin-top: -5px;
+}
+
+.con-slot-label:hover {
+    color: #02a3ec;
+}

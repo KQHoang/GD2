@@ -1,0 +1,46 @@
+.ms-popup-background {
+    width: 100%;
+    background: rgba(0, 0, 0, .4);
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+    opacity: 1;
+}
+
+.table-add-user {
+    border: 1px solid var(--border-color);
+}
+
+.table-add-user th {
+    background-color: #dbf4ff;
+}
+
+.table-add-user tr:hover td {
+    background-color: #fff !important;
+}
+
+.table-add-user td {
+    padding: 0 6px;
+}
+
+td .add-user-input {
+    padding: 0 12px;
+    height: 30px;
+    border: 1px solid var(--border-color) !important;
+}
+
+td .add-user-input:hover {
+    border: 1px solid var(--input-hover-border-color) !important;
+}
+
+td .add-user-input:focus {
+    outline: none;
+    /* outline: var(--input-hover-border-color) auto 1px; */
+    border: 1px solid var(--input-hover-border-color) !important;
+}
+
+.ps-sticky {
+    position: sticky;
+    left: 0;
+}

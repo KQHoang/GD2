@@ -1,0 +1,41 @@
+.dx-widget.dx-checkbox {
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    width: 22px;
+    height: 26px;
+}
+
+.dx-checkbox-container {
+    display: flex;
+    justify-content: center;
+}
+
+.dx-checkbox-icon {
+    border: 2px solid #686c7b !important;
+}
+
+.dx-checkbox.dx-state-hover .dx-checkbox-icon {
+    border: 2px solid #02a3ec !important;
+}
+
+.dx-checkbox-checked .dx-checkbox-icon {
+    border: none !important;
+    background-color: #02a3ec;
+    color: #fff;
+}
+
+.dx-checkbox-checked:hover .dx-checkbox-icon {
+    border: none;
+}
+
+.dx-checkbox.dx-state-focus .dx-checkbox-icon {
+    border: 2px solid #02a3ec !important;
+    background: #fff;
+}
+
+.dx-checkbox.dx-state-active .dx-checkbox-icon {
+    border: 2px solid #02a3ec !important;
+    background: #fff;
+    color: #fff;
+}

@@ -1,5 +1,5 @@
 <template>
-  <button class="btn-default flex items-center" :class="styleButton">
+  <button class="btn-default flex items-center justify-center" :class="styleButton">
     <div class="justify-center items-center flex ms-icon-default ms-button--icon" v-if="isShowIcon">
       <i class="ms-icon" :class="iconButtonName"> </i>   
     </div>
@@ -12,18 +12,28 @@
 export default {
   name: "MsButton",
   props: {
+
+    // css cho button
     styleButton:{
         type: String
-    },  
+    }, 
+    
+    // hiển thị icon true: hiển thị, false: ẩn
     isShowIcon:{
         type: Boolean
     },
+
+    // css cho icon
     iconButtonName: {
       type: String
     },
+
+    // nội dung button
     msButtonText: {
       type: String
     },
+
+    // css cho button
     styleButtonText:{
         type: String
     }
@@ -34,7 +44,9 @@ export default {
  .items-center{
     align-items: center;
   }
-
+.justify-center{
+  justify-content: center;
+}
 .btn-default {
   width: auto !important;
   height: 36px !important;
@@ -44,6 +56,7 @@ export default {
   font-family: regular;
   font-size: 14px;
   cursor: pointer;
+  
   .ms-icon-default {
     order: 0;
     margin-right: 4px;

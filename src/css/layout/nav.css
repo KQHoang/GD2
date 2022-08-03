@@ -92,6 +92,10 @@ a {
     height: 100%;
 }
 
+.menu-item:hover {
+    color: #02a3ec;
+}
+
 .menu-item-name {
     margin-top: 20px;
     font-weight: 500;

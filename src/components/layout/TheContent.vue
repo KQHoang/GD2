@@ -7,7 +7,7 @@
                     
                     <MsButton :styleButton="'ms-btn-primary'" :isShowIcon="true" 
                     :iconButtonName="'mi-push-white'" 
-                    :msButtonText="'Thêm mới'"/>
+                    :msButtonText="'Thêm mới'" @click="showAddUser"/>
                 </div>
             </div>
 
@@ -25,16 +25,106 @@
                             </div>
                         </span>
 
-                        <span class="select-box-role"></span>
+                        <span class="select-box-role m-l-12">
+                            <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box"/>
+                        </span>
+
+                        <div class="su-filter m-r-16">
+                            <div class="mi-24 cursor-pointer m-0 mi-setting"></div>
+                        </div>
                     </div>
+
+                    <!-- bảng người dùng -->
+                     <TableUser/> 
+
+                    <!-- phân trang -->
+                     <div class="paging">
+                        <div class="grid-navigatioin">
+                            <div class="page-total flex">
+                                Tổng số bản ghi: 
+                                <b style="padding: 0 6px">44</b>
+                            </div>
+
+                            <div class="page-size-selector flex items-center">
+                                <div class="m-r-8">Số bản ghi/trang</div>
+                                
+                                <MSDropDown/>
+
+                                <div class="page-info">
+                                    <b>1</b> - <b>44</b> bản ghi
+                                </div>
+                                <div class="page-next-preview">
+                                    <div class="ms-row m-0">
+                                        <div class="ms-pagination--mb ms-col ms-xs-12 ms-sm-12 ms-lg">
+                                            <div class="con-ms-pagination w-full ms-pagination-primary">
+                                                <nav  class="ms-pagination--nav flex justify-between items-center">
+                                                    <div class="ms-button-nav disable">
+                                                        <div class="ms-icon-container flex items-center justify-center btn-icon-1 ">
+                                                            <i class="ms-icon notranslate icon-scale mi-chevron-left"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ms-button-nav">
+                                                        <div class="ms-icon-container flex items-center justify-center btn-icon-1 ">
+                                                            <i class="ms-icon notranslate icon-scale mi-chevron-right"></i>
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
+    
+    <!-- pop up thêm mới nhân viên -->
+    <AddUser v-if="isShowAdd" @closePopUp="closeAddUser"/>
+
 </template>
 <script>
-
+import TableUser from '@/view/user/TableUser.vue'
+import AddUser from '@/view/user/AddUser.vue';
 export default {
-   name: "TheContent" 
+    name: "TheContent",
+    comments: {
+        TableUser, 
+        AddUser
+    },
+    data() {
+        return {
+            isShowAdd: false, // ẩn hiện form thêm mới người dùng
+            simpleProducts: [
+                "Tất cả",
+                "Quản trị ứng dụng quy trình",
+                "Nhân viên",
+                "Quản lý"
+            ] // mảng item trong select box lọc dữ liệu
+        };
+    },
+    components: { TableUser, AddUser },
+    methods:{
+
+        /**
+         * Hiện form thêm mới người dùng
+         * Khuất Quang Hoàng 
+         * Ngày tạo: 2/8/2022
+         */
+        showAddUser(){
+            this.isShowAdd = true;
+        },
+
+        /**
+         * Đóng form thêm mới người dùng
+         * Khuất Quang Hoàng 
+         * Ngày tạo: 2/8/2022
+         */
+        closeAddUser(isShow){
+            this.isShowAdd = isShow;
+        }
+    }
 }
 </script>
