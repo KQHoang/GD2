@@ -11,17 +11,17 @@
                     <div class="flex-m">
                         <div class="menu-item">
                             <div class="menu-item-name">Lượt chạy</div>
-                            <div></div> 
+                            <div class="menu-item-active"></div>
                             <!-- div active -->
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-name">Thiết kế quy trình</div>
-                            <div></div> 
+                            <div class="menu-item-active"></div>
                             <!-- div active -->
                         </div>
                         <div class="menu-item">
                             <div class="menu-item-name">Báo cáo</div>
-                            <div></div> 
+                            <div class="menu-item-active"></div>
                             <!-- div active -->
                         </div>
                         <div class="menu-item active">

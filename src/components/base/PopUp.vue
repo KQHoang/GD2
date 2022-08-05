@@ -65,7 +65,8 @@
               <div class="flex items-center">
                 <div class="ms-checkbox-container ms-checkbox">
                   <input type="checkbox" class="ms-checkbox--input" />
-                  <span class="icon-square-uncheck checkmark"></span>
+                  <span class="icon-square-uncheck checkmark" @click="change" :class="{'icon-square-check': this.check1 == true}"></span> 
+                  <!-- icon-square-uncheck  -->
                   <span class="con-slot-label">
                     <div class="label-role-checkbox">
                       Quản trị ứng dụng quy tình
@@ -78,7 +79,7 @@
             <div class="ms-col ms-role-checkbox">
               <div class="flex items-center">
                 <div class="ms-checkbox-container ms-checkbox flex">
-                  <DxCheckBox :icon-size="16"/>
+                  <DxCheckBox :icon-size="16" value="true"/>
                   <span class="con-slot-label">
                     <div class="label-role-checkbox">
                       Quản trị ứng dụng quy tình
@@ -143,6 +144,7 @@ export default {
   },
   data(){
     return {
+      check1: false
     }
   },
   methods: {
@@ -150,6 +152,10 @@ export default {
     closePopUp() {
       this.$emit("closePopUp", true);
     },
+    change(){
+      this.check1 = !this.check1;
+      console.log(this.check1);
+    }
   }
 };
 </script>

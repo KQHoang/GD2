@@ -52,9 +52,9 @@
                 <th class="th-width-200">Trạng thái</th>
               </thead>
 
-              <tbody>
+              <tbody v-for="i in index" :key="i">
                 <tr>
-                  <td>1</td>
+                  <td>{{i}}</td>
                   <td><input type="text" class="add-user-input w-full"></td>
                   <td><input type="text" class="add-user-input w-full"></td>
                   <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box w-full"/></td>
@@ -72,6 +72,7 @@
           :isShowIcon="true"
           :iconButtonName="'mi-push-white'"
           :msButtonText="'Thêm dòng'"
+          @click="addRow"
         />
         </div>
       </div>
@@ -99,7 +100,8 @@ export default {
     name: "AddUser",
     data(){
       return {
-        simpleProducts:["Nhân viên", "Quản lý"]
+        simpleProducts:["Nhân viên", "Quản lý"], 
+        index: 1
       }
     },
 
@@ -112,6 +114,9 @@ export default {
         closePopUp() {
             this.$emit("closePopUp", false);
         },
+        addRow(){
+          this.index = this.index + 1;
+        }
     },
     components: {  }
 };

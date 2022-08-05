@@ -1,0 +1,18 @@
+.customize-table-user {
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    z-index: 100;
+}
+
+.customize-table-user.ms-popup {
+    min-width: 316px;
+    width: 316px;
+}
+
+.customize-title--span {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .324px;
+    color: var(--text-primary-color);
+}

@@ -11,6 +11,7 @@
 @import url("base/checkbox.css");
 @import url("base/adduser.css");
 @import url("base/dropdown.css");
+@import url("base/customizetable.css");
 
 /* @import url("base/tableuser.css"); */
 
@@ -50,18 +51,15 @@ body {
     overflow-x: auto;
     min-width: 1366px;
     overflow-y: hidden;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    /* font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px; */
     font-size: 14px;
 }
 
 * {
     box-sizing: border-box;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
 }
-
-
-/* * {
-    box-sizing: border-box;
-} */
 
 :root {
     --button-primary-normal-bg-color: #02a3ec;

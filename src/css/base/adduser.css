@@ -26,8 +26,9 @@
 
 td .add-user-input {
     padding: 0 12px;
-    height: 30px;
+    height: 34px;
     border: 1px solid var(--border-color) !important;
+    border-radius: 3.5px;
 }
 
 td .add-user-input:hover {

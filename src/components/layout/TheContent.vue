@@ -29,13 +29,52 @@
                             <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box"/>
                         </span>
 
-                        <div class="su-filter m-r-16">
+                         <div class="su-filter m-r-16">
                             <div class="mi-24 cursor-pointer m-0 mi-setting"></div>
+
+                            <!-- Pop up tuỳ chỉnh cột trong bảng user -->
+                            <div id="customize-table-user" class="customize-table-user ms-popup flex flex-column">                              
+                                    <header class="ms-popup--header">
+                                        <div class="ms-popup--title">
+                                                <span class="customize-title--span">Tuỳ chỉnh cột</span>
+                                        </div>
+                                        <div class="flex justity-between items-center ms-popup--close">
+                                        <div
+                                            class="ms-icon-container flex items-center justify-center btn-icon-1"
+                                        >
+                                            <i
+                                            class="ms-icon notranslate icon-scale mi-close-2"
+                                            @click="closePopUp"
+                                            ></i>
+                                        </div>
+                                        </div>
+                                    </header>
+
+                                    <div class="ms-popup--content">
+
+                                    </div>
+
+                                    <footer class="ms-popup-footer">
+                                        <MsButton
+                                        class="m-r-12 p-d-16"
+                                        :styleButton="'ms-btn-default'"
+                                        :isShowIcon="false"
+                                        :msButtonText="'Lấy lại mặc định'"
+                                        
+                                        />
+                                        <MsButton
+                                        class="m-r-12 p-d-16"
+                                        :styleButton="'ms-btn-primary'"
+                                        :isShowIcon="false"
+                                        :msButtonText="'Áp dụng'"
+                                        />
+                                    </footer>
+                            </div>
                         </div>
                     </div>
 
                     <!-- bảng người dùng -->
-                     <TableUser/> 
+                    <TableUser/> 
 
                     <!-- phân trang -->
                      <div class="paging">

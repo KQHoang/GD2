@@ -23,7 +23,8 @@ grid-container .tb-widget {
     color: #333;
     font-weight: 400;
     font-size: 14px;
-    font-family: Helvetica Neue, Segoe UI, helvetica, verdana, sans-serif;
+    /* font-family: Helvetica Neue, Segoe UI, helvetica, verdana, sans-serif; */
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.35715;
 }
 
@@ -106,29 +107,34 @@ table th:not(:first-child, :last-child)::before {
     z-index: 1;
 }
 
-.table-user .header-title {
+
+/* .table-user .header-title {
     font-weight: 700;
     letter-spacing: .14px;
     color: #171b2a;
-}
+} */
 
-td {
+
+/* td {
     border-top: 1px solid var(--border-color);
-}
+} */
 
-tr:hover td {
+
+/* tr:hover td {
     background-color: #dbf4ff;
     cursor: pointer;
-}
+} */
 
-thead {
+
+/* thead {
     position: relative!important;
     background: #fff!important;
-}
+} */
 
-tr:hover .custom-column {
+
+/* tr:hover .custom-column {
     display: block;
-}
+} */
 
 .custom-column {
     position: sticky;
@@ -192,4 +198,108 @@ tr:hover .custom-column {
 .button-comand-wrap:hover {
     border-radius: 50%;
     background-color: #dadce3;
+}
+
+
+/*
+    css table
+*/
+
+.dx-data-row.dx-state-hover>td {
+    background-color: #dbf4ff!important;
+}
+
+.dx-data-row.dx-state-hover>td:last-child {
+    cursor: pointer;
+    position: sticky;
+    right: 0;
+    background-color: #dbf4ff !important;
+    /* display: block; */
+}
+
+.icon-hidden {
+    display: none;
+}
+
+.dx-data-row.dx-state-hover>td:last-child .icon-hidden {
+    display: block;
+}
+
+.style-button {
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-comand-wrap:hover {
+    border-radius: 50%;
+    background-color: #dadce3;
+}
+
+.button-comand-wrap {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dx-datagrid-table .dx-row>td:last-child {
+    padding: 0 !important;
+}
+
+.dx-header-row>td>.dx-datagrid-text-content {
+    font-weight: 700;
+    letter-spacing: .14px;
+    color: #171b2a;
+}
+
+.grid-container .dx-datagrid-headers .dx-datagrid-table .dx-row>td:not(:last-child, :first-child):before {
+    content: "";
+    position: absolute;
+    top: 30%;
+    left: 0;
+    background-color: var(--border-color);
+    width: 1px;
+    height: 20px;
+    z-index: 1;
+}
+
+.grid-container .dx-datagrid .dx-datagrid-headers .dx-header-row>td {
+    position: relative;
+    border-bottom: none !important;
+}
+
+.dx-datagrid-rowsview .dx-row {
+    border-top: none;
+    border-bottom: none;
+}
+
+.grid-container .dx-datagrid .dx-row>td {
+    padding: 0 16px;
+    height: 48px!important;
+    vertical-align: middle!important;
+}
+
+.grid-container .dx-datagrid .dx-row-lines>td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dx-datagrid .dx-column-lines>td:first-child {
+    border-left: none;
+}
+
+.dx-datagrid .dx-row-lines>td {
+    border-bottom: 1px solid #ddd;
+}
+
+.dx-row>td,
+.dx-row>tr>td {
+    border: none;
+}
+
+.dx-datagrid {
+    color: #171b2a;
 }

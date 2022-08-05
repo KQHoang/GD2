@@ -14,9 +14,10 @@
     display: flex;
 }
 
-.justify-between {
+
+/* .justify-between {
     justify-content: space-between;
-}
+} */
 
 .flex-1 {
     flex: 1;
@@ -96,6 +97,10 @@ a {
     color: #02a3ec;
 }
 
+.menu-item:hover .menu-item-active {
+    background-color: #02a3ec;
+}
+
 .menu-item-name {
     margin-top: 20px;
     font-weight: 500;
@@ -105,8 +110,11 @@ a {
     color: #02a3ec;
 }
 
-.menu-item-active {
+.active .menu-item-active {
     background-color: #02a3ec;
+}
+
+.menu-item-active {
     height: 3px;
     width: 100%;
 }

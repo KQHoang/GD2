@@ -2,7 +2,7 @@
   <div style="position: relative">
     <MsButton
       class=""
-      :styleButton="'btn-select-pagesize'"
+      :styleButton="'btn-select-pagesize justify-between'"
       :isShowIcon="true"
       :iconButtonName="'mi-chevron-down'"
       :msButtonText="selected"
@@ -88,7 +88,5 @@ export default {
     beforeUnmount() {
     window.removeEventListener("click", this.close);
   },
-
-  
 };
 </script>

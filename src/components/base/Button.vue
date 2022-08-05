@@ -53,7 +53,8 @@ export default {
   border-radius: 4px;
   padding: 0px 16px 0px 12px;
   min-width: 80px !important;
-  font-family: regular;
+  // font-family: regular;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 14px;
   cursor: pointer;
   

@@ -2,7 +2,8 @@
     min-width: 204px !important;
     width: 204px;
     font-size: 14px;
-    font-family: regular;
+    /* font-family: regular; */
+    font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 
@@ -46,4 +47,8 @@
     /* height: 200px !important; */
     max-height: none;
     min-height: auto;
+}
+
+.dx-dropdownlist-popup-wrapper .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item-content {
+    padding: 8px!important;
 }
