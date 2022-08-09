@@ -78,7 +78,7 @@
 items-center  */
 
 .bg-white {
-    background: #fff;
+    background: #fff !important;
 }
 
 .input-search-user {}
@@ -99,6 +99,11 @@ items-center  */
 
 .ms-input:hover {
     border: 1px solid var(--input-hover-border-color);
+}
+
+.ms-input:focus-within {
+    outline: none;
+    border: 1px solid var(--input-hover-border-color) !important;
 }
 
 .p-l-8 {

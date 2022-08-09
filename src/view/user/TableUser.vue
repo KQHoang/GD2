@@ -4,11 +4,12 @@
       <div class="h-full">
         <div class="tb-widget tb-visibility-change">
           <div class="tb-datagrid tb-gridbase-container">
+            <!-- :data-source="employees" -->
             <div class="tb-datagrid-header tb-datagrid-nowrap">
               <DxDataGrid
                 id="gridContainer"
-                :data-source="employees"
                 :key-expr="ID"
+                :data-source="employees"
                 column-resizing-mode="widget"
                 :allow-column-reordering="true"
                 :allow-column-resizing="true"
@@ -19,6 +20,7 @@
                 :hover-state-enabled="true"
                 :onRowClick="showUserDetail"
               >
+              <!-- data-field="UserCode" -->
                 <DxColumn
                   :width="230"
                   data-field="UserCode"
@@ -29,7 +31,16 @@
                   :width="230"
                   data-field="FullName"
                   caption="Họ và tên"
+                  cell-template="userProfileImage"
                 />
+                <template #userProfileImage="{ data }">
+                  <div class="flex">
+                    <ProfileImage/>
+                    <div class="flex" style="align-items: center;">
+                      {{data.value}}
+                    </div>
+                  </div>
+                </template>
 
                 <DxColumn
                   :width="230"
@@ -65,7 +76,7 @@
                       <div class="button-comand-wrap btn-more">
                         <div
                           class="mi-pencil icon-hidden"
-                          @click="editUser"
+                          @click="editUser($event)"
                         ></div>
                       </div>
                     </div>
@@ -269,7 +280,7 @@ export default {
         },
         {
           UserCode: "NV-100",
-          FullName: "Quang Hoàng",
+          FullName: "Hoàng",
           Department: "Trung tâm sản xuât",
           PositionName: "Nhân viên",
           Email: "fsafa@gmail.com",
@@ -284,7 +295,9 @@ export default {
      * Nhấn nút sửa người dùng
      * Khuất Quang Hoàng (2/8/2022)
      */
-    editUser() {
+    editUser(event) {
+      event.preventDefault();
+      event.stopPropagation();
       this.showPopUp = true;
       this.popUpTitle = "Sửa người dùng";
       this.buttonStyle = "ms-btn-primary";
@@ -322,8 +335,10 @@ export default {
      * hiện thông tin chi tiết nhân viên
      * Khuất Quang Hoàng (2/8/2022)
      */
-    showUserDetail() {
+    showUserDetail(selectRowsData) {
       this.isShowDetail = true;
+      const data = selectRowsData;
+      console.log(data);
     },
 
     /**

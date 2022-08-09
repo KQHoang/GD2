@@ -13,6 +13,10 @@
     border-color: var(--input-hover-border-color);
 }
 
+.ms-select-box.dx-texteditor.dx-state-focused.dx-editor-outlined {
+    border-color: #02a3ec;
+}
+
 
 /* không đổi màu icon down  */
 
@@ -34,6 +38,17 @@
 .dx-selectbox-popup-wrapper .dx-list-item.dx-state-hover {
     background-color: #f3fbfd !important;
     color: #02a3ec !important;
+}
+
+.dx-selectbox-popup-wrapper .dx-list-item.dx-state-active {
+    background-color: #f3fbfd !important;
+    color: #02a3ec !important;
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-list-item-selected {
+    background-color: #f3fbfd !important;
+    color: #02a3ec !important;
+    font-weight: 500;
 }
 
 

@@ -257,3 +257,11 @@
 .con-slot-label:hover {
     color: #02a3ec;
 }
+
+.ms-checkbox:focus .checkmark:not(.disabled),
+.ms-checkbox:focus .icon-square-check-primary.checkmark,
+.ms-checkbox:hover .checkmark:not(.disabled),
+.ms-checkbox:hover .icon-square-check-primary.checkmark {
+    border-radius: 50%;
+    background-color: #02a3ec!important;
+}
