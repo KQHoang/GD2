@@ -37,9 +37,13 @@
 
             <span class="select-box-role m-l-12">
               <DxSelectBox
-                :items="simpleProducts"
+                :data-source="simpleProducts"
+                display-expr="Name"
+                value-expr="ID"
                 placeholder="Chọn vai trò"
                 class="ms-select-box"
+                v-model="valueSelect"
+                :onValueChanged="showValueSelect"
               />
             </span>
 
@@ -303,13 +307,24 @@ export default {
     return {
       isShowAdd: false, // ẩn hiện form thêm mới người dùng
       simpleProducts: [
-        "Tất cả",
-        "Quản trị ứng dụng quy trình",
-        "Nhân viên",
-        "Quản lý",
+        {
+          ID: 1,Name: "Tất cả"
+        }
+        ,{ ID: 2,
+           Name: "Quản trị ứng dụng quy trình",
+        }
+        ,
+       {
+        ID: 3,Name: "Nhân viên"
+       }
+        ,
+        {
+          ID: 4, Name: "Quản lý"
+        }
       ], // mảng item trong select box lọc dữ liệu
       checkboxs: [false, false, false, false, false], // mảng chứa value của checkbox chỉnh sửa table
       isShowCustomize: false, // hiển thị pop up tuỳ chỉnh table
+      valueSelect: ""
     };
   },
   components: { TableUser, AddUser },
@@ -359,6 +374,10 @@ export default {
     closeCustomizeTable(){
       this.isShowCustomize = false;
     },
+
+    showValueSelect(){
+      alert(this.valueSelect);
+    }
 
   },
   update(){

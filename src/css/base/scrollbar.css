@@ -2,7 +2,7 @@
 
 ::-webkit-scrollbar {
     width: 6px;
-    height: 8px;
+    height: 6px;
 }
 
 
@@ -19,6 +19,7 @@
  ::-webkit-scrollbar-thumb {
     /* background: rgb(204, 204, 204); */
     background: #CBCCCF;
+    border-radius: 2px;
 }
 
 

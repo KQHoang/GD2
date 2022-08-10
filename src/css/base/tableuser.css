@@ -303,3 +303,22 @@ table th:not(:first-child, :last-child)::before {
 .dx-datagrid {
     color: #171b2a;
 }
+
+#gridContainer {
+    height: 100%;
+}
+
+.dot-status {
+    position: absolute!important;
+    width: 8px!important;
+    height: 8px!important;
+    border-radius: 50%!important;
+    left: 0!important;
+    top: 5px!important;
+    background-color: rgb(243, 150, 25);
+}
+
+.column-status {
+    color: rgb(243, 150, 25);
+    text-align: left;
+}

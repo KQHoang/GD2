@@ -1,7 +1,7 @@
 .customize-table-user {
     position: fixed;
-    top: 100px;
-    left: 100px;
+    top: 35px;
+    right: 0px;
     z-index: 100;
 }
 
@@ -10,6 +10,7 @@
     width: 316px;
     box-shadow: 0 0 10px rgb(0 0 0 / 18%);
     color: var(--text-primary-color);
+    position: absolute;
 }
 
 .customize-title--span {

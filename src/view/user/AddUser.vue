@@ -43,18 +43,32 @@
             <table class="table-user table-add-user">
               <thead class="header-title">
                 <th>STT</th>
-                <th class="th-width-200">Mã nhân viên</th>
-                <th class="th-width-200">Họ và tên</th>
-                <th class="th-width-200">Phòng ban</th>
-                <th class="th-width-250">Vị trí công việc</th>
-                <th class="th-width-250">Email</th>
-                <th class="th-width-311">Vai trò</th>
-                <th class="th-width-200">Trạng thái</th>
+                <th class="th-width-200">Mã nhân viên
+                  <span class="required">*</span>
+                </th>
+                <th class="th-width-200">Họ và tên
+                  <span class="required">*</span>
+                </th>
+                <th class="th-width-200">Phòng ban
+                  <span class="required">*</span>
+                </th>
+                <th class="th-width-250">Vị trí công việc
+                  <span class="required">*</span>
+                </th>
+                <th class="th-width-250">Email
+                  <span class="required">*</span>
+                </th>
+                <th class="th-width-311">Vai trò
+                  <span class="required">*</span>
+                </th>
+                <th class="th-width-200">Trạng thái
+                  <span class="required">*</span>
+                </th>
               </thead>
 
               <tbody v-for="i in index" :key="i">
                 <tr>
-                  <td>{{i}}</td>
+                  <td class="text-align">{{i}}</td>
                   <td><input type="text" class="add-user-input w-full"></td>
                   <td><input type="text" class="add-user-input w-full"></td>
                   <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box w-full"/></td>

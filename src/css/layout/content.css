@@ -125,6 +125,7 @@ items-center  */
 
 .su-filter {
     margin-left: auto;
+    position: relative;
 }
 
 .m-r-16 {

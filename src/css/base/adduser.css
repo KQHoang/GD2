@@ -45,3 +45,11 @@ td .add-user-input:focus {
     position: sticky;
     left: 0;
 }
+
+.required {
+    color: red;
+}
+
+.text-align {
+    text-align: center;
+}

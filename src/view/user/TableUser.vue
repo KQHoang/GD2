@@ -2,14 +2,14 @@
   <div>
     <div class="grid-container" id="user-table">
       <div class="h-full">
-        <div class="tb-widget tb-visibility-change">
-          <div class="tb-datagrid tb-gridbase-container">
+        <div class="tb-widget tb-visibility-change h-full">
+          <div class="tb-datagrid tb-gridbase-container h-full">
             <!-- :data-source="employees" -->
-            <div class="tb-datagrid-header tb-datagrid-nowrap">
+            <div class="tb-datagrid-header tb-datagrid-nowrap h-full">
               <DxDataGrid
                 id="gridContainer"
                 :key-expr="ID"
-                :data-source="employees"
+                :data-source="users"
                 column-resizing-mode="widget"
                 :allow-column-reordering="true"
                 :allow-column-resizing="true"
@@ -23,19 +23,22 @@
               <!-- data-field="UserCode" -->
                 <DxColumn
                   :width="230"
-                  data-field="UserCode"
+                  :min-width="230"
+                  data-field="userCode"
                   caption="Mã nhân viên"
+                  
                 />
 
                 <DxColumn
                   :width="230"
-                  data-field="FullName"
+                  :min-width="230"
+                  data-field="fullName"
                   caption="Họ và tên"
                   cell-template="userProfileImage"
                 />
                 <template #userProfileImage="{ data }">
                   <div class="flex">
-                    <ProfileImage/>
+                    <ProfileImage :userCode="this.code" />
                     <div class="flex" style="align-items: center;">
                       {{data.value}}
                     </div>
@@ -44,25 +47,33 @@
 
                 <DxColumn
                   :width="230"
-                  data-field="Department"
+                  data-field="departmentName"
                   caption="Phòng ban"
                 />
 
                 <DxColumn
                   :width="230"
-                  data-field="PositionName"
+                  data-field="positionName"
                   caption="Ví trí công việc"
                 />
 
-                <DxColumn :width="230" data-field="Email" caption="Email" />
+                <DxColumn :width="230" data-field="email" caption="Email" />
 
-                <DxColumn :width="230" data-field="" caption="Vai trò" />
+                <DxColumn :width="230" data-field="roleName" caption="Vai trò" />
 
                 <DxColumn
                   :width="230"
-                  data-field="Status"
+                  data-field="status"
                   caption="Trạng thái"
+                  cell-template="columnStatus"
                 />
+                <template #columnStatus="{data}">
+                  <div class="p-l-16 pos-relative column-status">
+                    {{convertStatus(data.value)}}
+                    <span class="dot-status">                    
+                    </span>
+                  </div>
+                </template>
 
                 <DxColumn
                   :min-width="96"
@@ -84,7 +95,7 @@
                       <div class="button-comand-wrap btn-more">
                         <div
                           class="icon-delete-custom icon-hidden"
-                          @click="deleteUser"
+                          @click="deleteUser($event)"
                         ></div>
                       </div>
                     </div>
@@ -260,6 +271,7 @@
 
 <script>
 import PopUp from "../../components/base/PopUp.vue";
+import axios from "axios";
 export default {
   name: "TableUer",
   components: {
@@ -269,24 +281,12 @@ export default {
     return {
       showPopUp: false, // hiển thị pop up
       isShowDetail: false,
-      employees: [
-        {
-          UserCode: "NV-100",
-          FullName: "Quang Hoàng",
-          Department: "Trung tâm sản xuât",
-          PositionName: "Nhân viên",
-          Email: "fsafa@gmail.com",
-          Status: "Chờ xác nhận",
-        },
-        {
-          UserCode: "NV-100",
-          FullName: "Hoàng",
-          Department: "Trung tâm sản xuât",
-          PositionName: "Nhân viên",
-          Email: "fsafa@gmail.com",
-          Status: "Chờ xác nhận",
-        },
-      ],
+      code: "",
+      users: [], // danh sách người dùng
+      pageIndex: 1, // trang hiện tại 
+      pageSize: 10, // số bản ghi trên 1 trang
+      keySearch: "", // chuỗi tìm kiếm
+      totalRecord: 0,
     };
   },
 
@@ -320,7 +320,9 @@ export default {
      * Nhấn nút xoá người dùng
      * Khuất Quang Hoàng (2/8/2022)
      */
-    deleteUser() {
+    deleteUser(event) {
+      event.preventDefault();
+      event.stopPropagation();
       this.showPopUp = true;
       this.popUpTitle = "Xoá người dùng";
       this.buttonStyle = "ms-btn-danger";
@@ -348,6 +350,31 @@ export default {
     closeDetail() {
       this.isShowDetail = false;
     },
+
+    convertStatus(input){
+      if(input == 0)
+        return "Đang hoạt động";
+      if(input == 1)
+        return "Chờ xác nhận";
+      if(input == 2)
+        return "Chưa kích hoạt";
+      if(input == 3)
+        return "Ngừng kích hoạt";
+    }
   },
+
+  created() {
+    var me = this;
+      axios.get(
+          `https://localhost:7087/api/v1/Users/filter?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&filter=${this.keySearch}`
+        )
+        .then(function (res) {
+          me.users = res.data.data;
+          console.log(me.users);
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
+    },
 };
 </script>
