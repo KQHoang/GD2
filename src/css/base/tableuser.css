@@ -315,10 +315,36 @@ table th:not(:first-child, :last-child)::before {
     border-radius: 50%!important;
     left: 0!important;
     top: 5px!important;
-    background-color: rgb(243, 150, 25);
 }
 
-.column-status {
-    color: rgb(243, 150, 25);
-    text-align: left;
+.status-yellow {
+    color: #F39619;
+}
+
+.status-yellow .dot-status {
+    background: #F39619;
+}
+
+.status-green {
+    color: #66D181;
+}
+
+.status-green .dot-status {
+    background: #66D181;
+}
+
+.status-blue {
+    color: #13B2D8;
+}
+
+.status-blue .dot-status {
+    background: #13B2D8;
+}
+
+.status-gray {
+    color: #616767;
+}
+
+.status-gray .dot-status {
+    background: #616767;
 }

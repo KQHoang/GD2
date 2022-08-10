@@ -49,7 +49,8 @@
                 <div class="right-action user">
                     <div class="user-avatar">
                         <div class="apui-user-avatar">
-                            <img src="../../assets/img/anh1.jpg" alt="">
+                            <!-- <img src="../../assets/img/anh1.jpg" alt=""> -->
+                            <ProfileImage :userCode="'fdasfd'"/>
                         </div>
                     </div>
                 </div>

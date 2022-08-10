@@ -7,6 +7,7 @@ import MSDropDown from './components/base/DropDown.vue'
 import DxSelectBox from 'devextreme-vue/select-box';
 import DxCheckBox from 'devextreme-vue/check-box';
 import ProfileImage from './components/base/ProfileImage.vue'
+import DxPopup from 'devextreme-vue/popup'
 import {
     DxDataGrid,
     DxColumn
@@ -21,4 +22,5 @@ app.component("DxCheckBox", DxCheckBox)
 app.component("DxDataGrid", DxDataGrid)
 app.component("DxColumn", DxColumn)
 app.component("ProfileImage", ProfileImage)
+app.component("DxPopup", DxPopup)
 app.mount('#app')

@@ -33,16 +33,30 @@ export default {
     props:{
         userCode:{
             type: String,
+        }, 
+
+        fullNameAvatar: {
+            type: String,
         }
     },
     data() {
         return {
-            id: "NV-001",
-            name: "KH",
-            color: ""
+            arrayName:[], // mảng sau khi tách full bởi các khoảng trắng
+            name: "KH", // tên hiển thị trong avatar
+            color: "", // màu sắc hiển thị
+        }
+    },
+    methods: {
+        splitSpace(){
+            if(this.fullNameAvatar){
+                 const s = this.fullNameAvatar;
+            this.arrayName = s.split(" ");
+            this.name = this.arrayName[this.arrayName.length-2].charAt(0) + this.arrayName[this.arrayName.length-1].charAt(0);
+            }   
         }
     },
     created(){
+        this.splitSpace();
         const charLast = this.userCode.slice(-1);
         switch (charLast) {
             case "9":

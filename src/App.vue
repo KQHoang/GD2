@@ -17,7 +17,6 @@
 import TheNav from "./components/layout/TheNav.vue";
 import TheMenu from "./components/layout/TheMenu.vue";
 import TheContent from "./components/layout/TheContent.vue";
-
 export default {
   name: "App",
   components: {

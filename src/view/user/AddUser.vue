@@ -1,5 +1,5 @@
 <template>
-  <div class="ms-component con-ms-popup center ms-popup-primary p-t-0">
+ <div class="ms-component con-ms-popup center ms-popup-primary p-t-0">
     <div class="ms-popup-background"></div>
     <div
       class="ms-popup flex flex-col"
@@ -7,9 +7,7 @@
         background: rgb(255, 255, 255);
         width: 992px;
         min-width: 500px;
-        height: 100%;
-      "
-    >
+        height: 100%; ">
       <header class="ms-popup--header">
         <div class="ms-popup--title">
           <h2>
@@ -21,7 +19,7 @@
             class="ms-icon-container flex items-center justify-center btn-icon-1"
           >
             <i
-              class="ms-icon notranslate icon-scale mi-close-2"
+              class="ms-icon notranslate icon-scale mi-close-add"
               @click="closePopUp"
             ></i>
           </div>

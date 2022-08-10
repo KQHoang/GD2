@@ -70,6 +70,8 @@ export default {
   methods: {
     setActive(indexSelect) {
       this.selected = indexSelect;
+      this.$emit("getPageSize", this.selected);
+      this.isShow = false;
     },
 
     showDropDown() {

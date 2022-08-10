@@ -130,6 +130,15 @@
     background-color: var(--icon-deault-color)!important;
 }
 
+.mi-close-add {
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+    -webkit-mask-position: -96px -72px;
+    -webkit-mask-repeat: no-repeat;
+    background-color: var(--icon-deault-color)!important;
+}
+
 
 /* footer */
 

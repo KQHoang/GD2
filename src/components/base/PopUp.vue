@@ -156,7 +156,6 @@ export default {
       this.$emit("closePopUp", true);
     },
     change(index){
-      debugger
       if(this.checks[index])
         this.checks[index]= false;
       else
