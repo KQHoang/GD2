@@ -20,7 +20,7 @@
         </span>
 
         <span class="select-box-role m-l-12">
-          <DxSelectBox
+          <DxSelectBox 
             :data-source="simpleProducts"
             display-expr="Name"
             value-expr="ID"
@@ -38,7 +38,7 @@
           ></div>
 
           <!-- Pop up tuỳ chỉnh cột trong bảng user -->
-          <CustomizeTable @closeCustomizeTable="closeCustomizeTable" v-if="isShowCustomize"/>
+          <CustomizeTable @closeCustomizeTable="closeCustomizeTable" v-if="isShowCustomize" @columnCustomizeTable="columnCustomizeTable"/>
         </div>
       </div>
 
@@ -62,6 +62,7 @@
                   :show-row-lines="true"
                   :hover-state-enabled="true"
                   :onRowClick="showUserDetail"
+                  :paging="{enabled: false}"
                 >
                   <!-- data-field="UserCode" -->
                   <DxColumn
@@ -80,7 +81,7 @@
                   />
                   <template #userProfileImage="{ data }">
                     <div class="flex">
-                      <ProfileImage :userCode="this.code" :fullNameAvatar="data.value"/>
+                      <ProfileImage :userCode="data.values[0]" :fullNameAvatar="data.value"/>
                       <div class="flex" style="align-items: center">
                         {{ data.value }}
                       </div>
@@ -91,20 +92,23 @@
                     :width="230"
                     data-field="departmentName"
                     caption="Phòng ban"
+                    :visible="columnVisible[0]"
                   />
 
                   <DxColumn
                     :width="230"
                     data-field="positionName"
                     caption="Ví trí công việc"
+                    :visible="columnVisible[1]"
                   />
 
-                  <DxColumn :width="230" data-field="email" caption="Email" />
+                  <DxColumn :width="230" data-field="email" caption="Email" :visible="columnVisible[2]"/>
 
                   <DxColumn
                     :width="230"
                     data-field="roleName"
                     caption="Vai trò"
+                    :visible="columnVisible[3]"
                   />
 
                   <DxColumn
@@ -113,6 +117,7 @@
                     caption="Trạng thái"
                     cell-template="columnStatus"
                     alignment="left"
+                    :visible="columnVisible[4]"
                   />
                   <template #columnStatus="{ data }">
                     <div
@@ -130,13 +135,13 @@
                     :width="96"
                     cell-template="dropDownBoxEditor"
                   />
-                  <template #dropDownBoxEditor>
+                  <template #dropDownBoxEditor="{ data }">
                     <div class="flex justify-flexend m-8 group-icon-table">
                       <div class="style-button">
                         <div class="button-comand-wrap btn-more">
                           <div
                             class="mi-pencil icon-hidden"
-                            @click="editUser($event)"
+                            @click="editUser($event, data.data)"
                           ></div>
                         </div>
                       </div>
@@ -144,7 +149,7 @@
                         <div class="button-comand-wrap btn-more">
                           <div
                             class="icon-delete-custom icon-hidden"
-                            @click="deleteUser($event)"
+                            @click="deleteUser($event, data.data)"
                           ></div>
                         </div>
                       </div>
@@ -164,9 +169,11 @@
           :popUpTitle="popUpTitle"
           :buttonStyle="buttonStyle"
           @closePopUp="closePopUp"
-          :userName="userName"
-          :listRole="listRole"
+          :editMode="editMode"
+          :userInfo="userInfo"
         />
+        <!-- :userName="userName" -->
+        <!-- :listRole="listRole" -->
 
         <!-- Thông tin chi tiết người dùng -->
         <div
@@ -178,19 +185,26 @@
             <div class="mi-close" @click="closeDetail"></div>
             <div class="ms-row-detail">
               <div class="ms-col icon-detail">
-                <div class="avatar m-r-8">
-                  <img src="" style="width: 64px; height: 64px" alt="" />
+                <div class="avatar m-r-8 m-t-10">
+                  <ProfileImage  :userCode="userInfo.userCode" :fullNameAvatar="userInfo.fullName" :key="userInfo.userCode"/>
                 </div>
               </div>
 
               <div class="ms-col user-detail-info">
-                <div class="fullname font-20 bold">Khuất Quang Hoàng</div>
-                <div>Hoang@gmail.com</div>
+                <div class="fullname font-20 bold">{{userInfo.fullName}}</div>
+                <div>{{userInfo.email}}</div>
                 <div class="status-detail">
-                  <div class="p-l-16 pos-relative">
-                    <span class="icon-dot-detail"> </span>
-                    <span class="active-detail"> Đang hoạt động </span>
-                  </div>
+                  <!-- <div class="p-l-16 pos-relative"> -->
+                    <div
+                      class="p-l-16 pos-relative"
+                      :class="bindingClassStatus(userInfo.status)"
+                    >
+                      {{ convertStatus(userInfo.status) }}
+                      <span class="dot-status icon-dot-detail"> </span>
+                    </div>
+                    <!-- <span class="icon-dot-detail"> </span>
+                    <span class="active-detail"> Đang hoạt động </span> -->
+                  <!-- </div> -->
                 </div>
                 <div class="flex">
                   <MsButton
@@ -198,6 +212,8 @@
                     :styleButton="'ms-btn-detail'"
                     :isShowIcon="false"
                     :msButtonText="'Cập nhật'"
+                    @click="editUserDetail(this.userInfo)"
+
                   />
 
                   <MsButton
@@ -205,6 +221,7 @@
                     :styleButton="'ms-btn-detail'"
                     :isShowIcon="false"
                     :msButtonText="'Xoá'"
+                    @click="deleteUserDetail(this.userInfo)"
                   />
                 </div>
               </div>
@@ -219,7 +236,7 @@
                   </div>
 
                   <div class="ms-col prop-detail-value">
-                    <div class="value-border-bottom">NV-0011</div>
+                    <div class="value-border-bottom">{{userInfo.userCode}}</div>
                   </div>
                 </div>
 
@@ -229,7 +246,7 @@
                   </div>
 
                   <div class="ms-col prop-detail-value">
-                    <div class="value-border-bottom">Trung tâm sản xuất</div>
+                    <div class="value-border-bottom">{{userInfo.departmentName}}</div>
                   </div>
                 </div>
 
@@ -239,7 +256,7 @@
                   </div>
 
                   <div class="ms-col prop-detail-value">
-                    <div class="value-border-bottom">Giám đốc/nhân viên</div>
+                    <div class="value-border-bottom">{{userInfo.positionName}}</div>
                   </div>
                 </div>
 
@@ -298,13 +315,13 @@
                   <div class="con-ms-pagination w-full ms-pagination-primary">
                     <nav
                       class="ms-pagination--nav flex justify-between items-center">
-                      <div class="ms-button-nav disable">
+                      <div class="ms-button-nav button-pre" :class="disableButtonPaging()">
                         <div
                           class="ms-icon-container flex items-center justify-center btn-icon-1" @click="prePage">
                           <i class="ms-icon notranslate icon-scale mi-chevron-left"></i>
                         </div>
                       </div>
-                      <div class="ms-button-nav">
+                      <div class="ms-button-nav button-next" :class="disableButtonPaging()">
                         <div
                           class="ms-icon-container flex items-center justify-center btn-icon-1" @click="nextPage">
                           <i class="ms-icon notranslate icon-scale mi-chevron-right"></i>
@@ -326,6 +343,7 @@
 import PopUp from "../../components/base/PopUp.vue";
 import CustomizeTable from "./CustomizeTable.vue"
 import axios from "axios";
+import HoangEnum from "../../js/enums.js";
 export default {
   name: "TableUer",
   components: {
@@ -346,6 +364,9 @@ export default {
       recordEnd: 0, // bản ghi cuối 
       checkboxs: [false, false, false, false, false],
       isShowCustomize: false, // hiển thị tuỳ chỉnh bảng người dùng
+      userInfo: {}, // thông tin người dùng gửi sang pop up
+      editMode: 0, // 0 - sửa vai trò, 1 - xoá người dùng
+      columnVisible: [true, true, true, true, true],
     };
   },
 
@@ -354,7 +375,7 @@ export default {
      * Nhấn nút sửa người dùng
      * Khuất Quang Hoàng (2/8/2022)
      */
-    editUser(event) {
+    editUser(event, user) {
       event.preventDefault();
       event.stopPropagation();
       this.showPopUp = true;
@@ -362,10 +383,27 @@ export default {
       this.buttonStyle = "ms-btn-primary";
       this.buttonName = "Lưu";
       this.popUpStyle = "popup-edit-user";
-      this.userName = "";
-      this.listRole = "dfsda";
-      this.sShowDetail = false;
+      this.userInfo = user;
+      this.editMode = 0;
     },
+
+    /**
+     * Nhấn nút sửa người dùng
+     * Người tạo: Khuất Quang Hoàng
+     *  (2/8/2022)
+     */
+    editUserDetail(user){
+      this.showPopUp = true;
+      this.popUpTitle = "Sửa người dùng";
+      this.buttonStyle = "ms-btn-primary";
+      this.buttonName = "Lưu";
+      this.popUpStyle = "popup-edit-user";
+      this.userInfo = user;
+      this.editMode = 0;
+      this.isShowDetail = false;
+    },
+
+
 
     /**
      * Đóng pop up
@@ -379,7 +417,7 @@ export default {
      * Nhấn nút xoá người dùng
      * Khuất Quang Hoàng (2/8/2022)
      */
-    deleteUser(event) {
+    deleteUser(event, user) {
       event.preventDefault();
       event.stopPropagation();
       this.showPopUp = true;
@@ -387,8 +425,23 @@ export default {
       this.buttonStyle = "ms-btn-danger";
       this.buttonName = "Xoá";
       this.popUpStyle = "popup-notitification";
-      this.userName = "Khuất Quang Hoàng";
-      this.listRole = "";
+      this.userInfo = user;
+      this.editMode = 1; 
+    },
+
+    /**
+     * Nhấn nút xoá người dùng
+     * Khuất Quang Hoàng
+     *  (2/8/2022)
+     */
+    deleteUserDetail(user) {
+      this.showPopUp = true;
+      this.popUpTitle = "Xoá người dùng";
+      this.buttonStyle = "ms-btn-danger";
+      this.buttonName = "Xoá";
+      this.popUpStyle = "popup-notitification";
+      this.userInfo = user;
+      this.editMode = 1; 
       this.isShowDetail = false;
     },
 
@@ -398,8 +451,7 @@ export default {
      */
     showUserDetail(selectRowsData) {
       this.isShowDetail = true;
-      const data = selectRowsData;
-      console.log(data);
+      this.userInfo = selectRowsData.data;
     },
 
     /**
@@ -415,10 +467,10 @@ export default {
      * Khuất Quang Hoàng (10/8/2022)
      */
     convertStatus(input) {
-      if (input == 0) return "Đang hoạt động";
-      if (input == 1) return "Chờ xác nhận";
-      if (input == 2) return "Chưa kích hoạt";
-      if (input == 3) return "Ngừng kích hoạt";
+      if (input == HoangEnum.Status.Working) return "Đang hoạt động";
+      if (input == HoangEnum.Status.WConfirm) return "Chờ xác nhận";
+      if (input == HoangEnum.Status.NotActive) return "Chưa kích hoạt";
+      if (input == HoangEnum.Status.DeActivation) return "Ngừng kích hoạt";
     },
 
     /**
@@ -428,10 +480,10 @@ export default {
      */
     bindingClassStatus(value) {
       return {
-        "status-yellow": value == 1,
-        "status-green": value == 0,
-        "status-blue": value == 2,
-        "status-gray": value == 3,
+        "status-yellow": value == HoangEnum.Status.WConfirm,
+        "status-green": value == HoangEnum.Status.Working,
+        "status-blue": value == HoangEnum.Status.NotActive,
+        "status-gray": value == HoangEnum.Status.DeActivation,
       };
     },
 
@@ -491,7 +543,7 @@ export default {
      * Ngày tạo: (10/8/2022)
      */
     nextPage(){
-      if(this.recordEnd <= this.totalRecord)
+      if(this.recordEnd < this.totalRecord)
       {
         this.pageIndex ++;
         this.getPaging();  
@@ -509,6 +561,27 @@ export default {
         this.pageIndex --;
         this.getPaging();  
       }
+    },
+
+    /**
+     * binding class disable nút phân trang
+     * Người tạo: Khuất Quang Hoàng 
+     * Ngày tạo: (11/8/2022)
+     */
+    disableButtonPaging(){
+      return{
+        "disablePre": this.recordStart == 1,
+        "disableNext": this.recordEnd >= this.totalRecord,
+      }
+    }, 
+
+    /**
+     * Nhận dữ liệu từ bên pop up
+     * Người tạo: Khuất Quang Hoàng 
+     * Ngày tạo: (11/8/2022)
+     */
+    columnCustomizeTable(array){
+      this.columnVisible = array;
     }
   },
 

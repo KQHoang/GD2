@@ -101,7 +101,11 @@
     height: 24px;
 }
 
-.disable {
+.button-pre.disablePre {
+    opacity: .5;
+}
+
+.button-next.disableNext {
     opacity: .5;
 }
 
@@ -138,5 +142,4 @@
     -webkit-mask-position: -144px -24px;
     -webkit-mask-repeat: no-repeat;
     background-color: var(--icon-deault-color);
-    ;
 }

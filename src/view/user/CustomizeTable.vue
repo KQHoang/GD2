@@ -241,6 +241,7 @@
         :styleButton="'ms-btn-primary'"
         :isShowIcon="false"
         :msButtonText="'Áp dụng'"
+        @click="btnApplyClick"
       />
     </footer>
   </div>
@@ -251,16 +252,36 @@
         name: "CustomizeTable",
         data(){
             return {
-                checkboxs: [false, false, false, false, false],
+                checkboxs: [false, false, false, false, false], // mảng danh sách trạng thái các input
             }
         }, 
         methods: {
+            /**
+           * Thay đổi trạng thái checkbox
+           * Khuất Quang Hoàng
+           * Ngày tạo: 2/8/2022
+           */
             change(index) {
                 this.checkboxs[index] = !this.checkboxs[index];
             },
 
+            /**
+           * Đóng form tuỳ chỉnh
+           * Khuất Quang Hoàng
+           * Ngày tạo: 2/8/2022
+           */
             closeCustomizeTable(){
                 this.$emit("closeCustomizeTable", false);
+            },
+
+             /**
+           * Thực hiện ẩn hiện cột bảng người dùng
+           * Khuất Quang Hoàng
+           * Ngày tạo: 12/8/2022
+           */
+            btnApplyClick(){
+              this.$emit("columnCustomizeTable", this.checkboxs);
+              this.$emit("closeCustomizeTable", false);
             }
         },
     }

@@ -1,7 +1,6 @@
 <template>
   <div style="position: relative">
     <MsButton
-      class=""
       :styleButton="'btn-select-pagesize justify-between'"
       :isShowIcon="true"
       :iconButtonName="'mi-chevron-down'"
@@ -62,22 +61,39 @@ export default {
   name: "MSDropDown",
   data() {
     return {
-      selected: 15,
-      isShow: false,
+      selected: 15, // số bản ghi trên 1 trang
+      isShow: false, // hiển thị dropdown chọn số lượng bản ghi
     };
   },
 
   methods: {
+
+    /**
+     * chọn item trong list số lượng bản ghi trên trang
+     * Người tạo: Khuất Quang Hoàng
+     * Ngày tạo: 11/8/2022
+     * @param {* số bản ghi trên 1 trang} indexSelect 
+     */
     setActive(indexSelect) {
       this.selected = indexSelect;
       this.$emit("getPageSize", this.selected);
       this.isShow = false;
     },
 
+    /**
+     * Đóng mở danh sách dropdown khi ấn 
+     * Người tạo: Khuất Quang Hoàng
+     * Ngày tạo: 11/8/2022 
+     */
     showDropDown() {
       this.isShow = !this.isShow;
     },
 
+    /**
+     * Ẩn danh sách khi nhấn ra ngoài
+     * Người tạo: Khuất Quang Hoàng
+     * Ngày tạo: 11/8/2022 
+     */
     close(e) {
       if (!this.$el.contains(e.target)) {
         this.isShow = false;

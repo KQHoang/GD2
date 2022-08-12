@@ -1,5 +1,5 @@
 .detail-preview-user {
-    position: absolute;
+    position: fixed;
     top: -2px;
     right: 0;
     height: 101%;
@@ -53,14 +53,8 @@
     position: relative;
 }
 
-.icon-dot-detail {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    left: 0;
-    top: 13px;
-    background-color: rgb(102, 209, 129);
+.icon-dot-detail.dot-status {
+    top: 13px !important;
 }
 
 .active-detail {
@@ -157,4 +151,8 @@
 
 .line-height-48 {
     line-height: 48px;
+}
+
+.m-t-10 {
+    margin-top: 10px;
 }

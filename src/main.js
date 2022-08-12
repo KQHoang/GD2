@@ -8,6 +8,7 @@ import DxSelectBox from 'devextreme-vue/select-box';
 import DxCheckBox from 'devextreme-vue/check-box';
 import ProfileImage from './components/base/ProfileImage.vue'
 import DxPopup from 'devextreme-vue/popup'
+import DxTagBox from 'devextreme-vue/tag-box';
 import {
     DxDataGrid,
     DxColumn
@@ -23,4 +24,5 @@ app.component("DxDataGrid", DxDataGrid)
 app.component("DxColumn", DxColumn)
 app.component("ProfileImage", ProfileImage)
 app.component("DxPopup", DxPopup)
+app.component("DxTagBox", DxTagBox)
 app.mount('#app')

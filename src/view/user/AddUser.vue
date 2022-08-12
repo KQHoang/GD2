@@ -69,11 +69,26 @@
                   <td class="text-align">{{i}}</td>
                   <td><input type="text" class="add-user-input w-full"></td>
                   <td><input type="text" class="add-user-input w-full"></td>
-                  <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box w-full"/></td>
-                  <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box w-full"/></td>
+                  <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn phòng ban" class="ms-select-box w-full"/></td>
+                  <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn vị trí công việc" class="ms-select-box w-full "/></td>
                   <td><input type="text" class="add-user-input w-full"></td>
-                  <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box w-full"/></td>
-                  <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box w-full"/></td>
+                  <td> 
+                    <DxTagBox
+                      class="ms-select-box" 
+                      :data-source="simpleProducts"
+                      :search-enabled="true"
+                      height="36px"
+                      width="340px"
+                      placeholder="Chọn vai trò"
+                      :accept-custom-value="false"
+                      :multiline="false"
+                      />
+                      <!-- value-expr="id"
+                      display-expr="name"
+                      v-model="userRoles[tr].ListRoleID" -->
+                    <!-- <DxSelectBox :items="simpleProducts" placeholder="Chọn vai trò" class="ms-select-box w-full h-34"/> -->
+                  </td>
+                  <td> <DxSelectBox :items="simpleProducts" placeholder="Chọn trạng thái" class="ms-select-box w-full "/></td>
                 </tr>
               </tbody>
             </table>
@@ -95,9 +110,10 @@
           :styleButton="'ms-btn-default'"
           :isShowIcon="false"
           :msButtonText="'Huỷ'"
+          @click="closePopUp"
         />
         <MsButton
-          class="m-r-12 p-d-16"
+          class="p-d-16"
           :styleButton="'ms-btn-primary'"
           :isShowIcon="false"
           :msButtonText="'Lưu'"
@@ -112,8 +128,8 @@ export default {
     name: "AddUser",
     data(){
       return {
-        simpleProducts:["Nhân viên", "Quản lý"], 
-        index: 1
+        simpleProducts:["Nhân viên", "Quản lý"], // mảng demo các item trong selectbox
+        index: 1 // số dòng trong bảng
       }
     },
 
@@ -126,6 +142,12 @@ export default {
         closePopUp() {
             this.$emit("closePopUp", false);
         },
+
+        /**
+         * Thêm dòng cho bảng thêm người dùng
+         * Khuất Quang Hoàng
+         * Ngày tạo: 2/8/2022
+         */
         addRow(){
           this.index = this.index + 1;
         }
