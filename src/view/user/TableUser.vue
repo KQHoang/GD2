@@ -502,7 +502,7 @@ export default {
      * Ngày tạo: (4/8/2022)
      */
     showCustomizeTable() {
-      this.isShowCustomize = true;
+      this.isShowCustomize = !this.isShowCustomize;
     },
 
      /**

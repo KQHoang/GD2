@@ -23,7 +23,7 @@
             <div class="ms-icon-default flex items-center justify-center p-l-8">
               <i class="ms-icon pre-icon mi-search"></i>
             </div>
-            <input type="text" placeholder="Tìm kiếm" class="ms-input-item" />
+            <input type="text" placeholder="Tìm kiếm" class="ms-input-item" ref="hoang"/>
           </div>
         </div>
       </span>
@@ -235,6 +235,7 @@
         :styleButton="'ms-btn-default'"
         :isShowIcon="false"
         :msButtonText="'Lấy lại mặc định'"
+         @click="getDefaultCustomize"
       />
       <MsButton
         class="m-r-12 p-d-16"
@@ -282,7 +283,39 @@
             btnApplyClick(){
               this.$emit("columnCustomizeTable", this.checkboxs);
               this.$emit("closeCustomizeTable", false);
+            }, 
+
+              /**
+           * Thực hiện ẩn hiện đóng pop up khi click ra ngoài
+           * Khuất Quang Hoàng
+           * Ngày tạo: 12/8/2022
+           */
+           close(e) {
+            if (!this.$el.contains(e.target) && !e.target.classList.contains('cursor-pointer')) {
+                this.$emit("closeCustomizeTable", false);
             }
+          }, 
+
+           /**
+           * Thực hiện lấy lại mặc định tuỳ chỉnh cột
+           * Khuất Quang Hoàng
+           * Ngày tạo: 12/8/2022
+           */
+          getDefaultCustomize(){
+            for(var i=0; i<this.checkboxs.length; i++)
+              this.checkboxs[i] = true;
+          }
+
+            
         },
+
+        created() {
+           this.$nextTick(() => this.$refs.hoang.focus());
+           window.addEventListener("click", this.close);
+        },
+
+        beforeUnmount() {
+        window.removeEventListener("click", this.close);
+      },
     }
 </script>

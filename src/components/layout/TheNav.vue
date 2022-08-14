@@ -45,7 +45,9 @@
                     <div class="pre-icon mi-search"></div>
                     <input type="text" class="flex-1 m-l-4" placeholder="Nhập ID, tiêu đề lượt chạy">
                 </div>
-                <div id="AMIS-Notification" class="apui-notification-trigger"></div> 
+                <div id="AMIS-Notification" class="apui-notification-trigger">
+                    <div class="apui-notifi-count">12</div>
+                </div> 
                 <div class="right-action user">
                     <div class="user-avatar">
                         <div class="apui-user-avatar">

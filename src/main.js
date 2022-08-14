@@ -9,11 +9,23 @@ import DxCheckBox from 'devextreme-vue/check-box';
 import ProfileImage from './components/base/ProfileImage.vue'
 import DxPopup from 'devextreme-vue/popup'
 import DxTagBox from 'devextreme-vue/tag-box';
+import { createRouter, createWebHistory } from 'vue-router'
+import GridUser from './view/user/TableUser.vue'
 import {
     DxDataGrid,
     DxColumn
 } from 'devextreme-vue/data-grid';
 
+const routers = [{
+    path: '/setting/user',
+    component: GridUser
+}]
+
+const router = createRouter({
+    // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
+    history: createWebHistory(),
+    routes: routers, // short for `routes: routes`
+})
 
 const app = createApp(App);
 app.component("MsButton", MsButton)
@@ -25,4 +37,4 @@ app.component("DxColumn", DxColumn)
 app.component("ProfileImage", ProfileImage)
 app.component("DxPopup", DxPopup)
 app.component("DxTagBox", DxTagBox)
-app.mount('#app')
+app.use(router).mount('#app')

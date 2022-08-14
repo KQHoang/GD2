@@ -151,16 +151,19 @@
 
 .item-wrap {}
 
-.avatar {
+
+/* .avatar {
     width: 66px;
     height: 66px;
-}
+} */
 
 .avatar .profile-image {
     width: 66px;
     height: 66px;
-    line-height: 66px;
+    line-height: 64px;
+    border: 1px solid;
     font-size: 32px;
+    margin-right: 0 !important;
 }
 
 .user-information {

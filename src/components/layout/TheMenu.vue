@@ -2,7 +2,11 @@
     <div class="flex flex-col list-menu" id="menu">
         <div class="setting-tab-item flex align-items-center cursor-pointer" @click="active(1)" :class="{ 'item-activated' : 1 == this.actived}">
             <div class="icon-tab icon-employee"></div>
-            <div class="name-tab">Người dùng</div>
+            <div class="name-tab">
+                <router-link to="/setting/user">Người dùng</router-link>
+                
+               
+            </div>
         </div>
 
         <div class="setting-tab-item flex align-items-center cursor-pointer" @click="active(2)" :class="{ 'item-activated' : 2 == this.actived}">

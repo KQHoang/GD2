@@ -55,11 +55,14 @@
           </div>
           <br />
 
-          <label class="bold lab-role">
+          <div style="margin-bottom: 4px">
+            <label class="bold lab-role">
             Vai trò
             <span class="required"> * </span>
             <br />
           </label>
+          </div>
+          
           <br />
 
           <div class="ms-row-role">
