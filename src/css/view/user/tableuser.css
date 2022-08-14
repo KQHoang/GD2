@@ -189,14 +189,14 @@ table th:not(:first-child)::before {
 .mi-pencil {
     width: 24px!important;
     height: 24px!important;
-    background: url(../../assets/img/Icon.de5bb0db.svg) -216px 0 no-repeat!important;
+    background: url(../../../assets/img/Icon.de5bb0db.svg) -216px 0 no-repeat!important;
 }
 
 .icon-delete-custom {
     background-color: #de1e1e!important;
     width: 24px!important;
     height: 24px!important;
-    -webkit-mask-image: url(../../assets/img/Icon_process.1401a69c.svg);
+    -webkit-mask-image: url(../../../assets/img/Icon_process.1401a69c.svg);
     -webkit-mask-position: -264px 0;
     -webkit-mask-repeat: no-repeat;
 }

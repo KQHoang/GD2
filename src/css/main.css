@@ -3,15 +3,15 @@
 @import url("layout/content.css");
 @import url("base/selectbox.css");
 @import url("base/scrollbar.css");
-@import url("base/tableuser.css");
+@import url("./view//user/tableuser.css");
 @import url("base/pagination.css");
 @import url("base/popup.css");
 @import url("base/button.css");
-@import url("base/userdetail.css");
+@import url("./view/user/userdetail.css");
 @import url("base/checkbox.css");
-@import url("base/adduser.css");
+@import url("./view/user/adduser.css");
 @import url("base/dropdown.css");
-@import url("base/customizetable.css");
+@import url("./view/user/customizetable.css");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 /* @import url("base/tableuser.css"); */
