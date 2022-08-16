@@ -25,7 +25,7 @@
         <div class="ms-content-delete" v-if="isDelete">
           <span style="color: #171b2a"
             >Bạn có chắc chắn muốn xoá
-            <span style="font-weight: 700">{{ userInfo.fullName }}</span>
+            <span style="font-weight: 700">{{ user.fullName }}</span>
             khỏi ứng dụng AMIS Quy trình không?</span
           >
         </div>
@@ -35,20 +35,20 @@
           <div class="item-wrap">
             <div class="flex items-center">
               <div class="avatar m-r-8">
-                 <ProfileImage  :userCode="userInfo.userCode" :fullNameAvatar="userInfo.fullName"/>
+                 <ProfileImage  :userCode="user.userCode" :fullNameAvatar="user.fullName"/>
               </div>
               <div class="user-information">
                 <div>
-                  <b>{{userInfo.fullName}}</b>
-                  <span class="m-l-4">({{userInfo.userCode}})</span>
+                  <b>{{user.fullName}}</b>
+                  <span class="m-l-4">({{user.userCode}})</span>
                 </div>
                 <div class="m-t-4 m-b-4">
-                  <span>{{userInfo.email}}</span>
+                  <span>{{user.email}}</span>
                 </div>
                 <div>
-                  <span>{{userInfo.positionName}}</span>
+                  <span>{{user.positionName}}</span>
                   <span> - </span>
-                  <span>{{userInfo.departmentName}}</span>
+                  <span>{{user.departmentName}}</span>
                 </div>
               </div>
             </div>
@@ -67,21 +67,21 @@
 
           <div class="ms-row-role">
 
-            <div class="ms-col ms-role-checkbox">
+            <div class="ms-col ms-role-checkbox" v-for="item in roles" :key="item">
               <div class="flex items-center">
                 <div class="ms-checkbox-container ms-checkbox">
                   <input type="checkbox" class="ms-checkbox--input" />
-                  <span class="icon-square-uncheck checkmark" @click="change(0)" :class="{'icon-square-check': this.checks[0] == true}"></span> 
+                  <span class="icon-square-uncheck checkmark" @click="change(item.index)" :class="{'icon-square-check': this.checks[item.index] == true}"></span> 
                   <span class="con-slot-label">
                     <div class="label-role-checkbox">
-                      Quản trị ứng dụng quy tình
+                      <!-- Quản trị ứng dụng quy tình -->{{item.roleName}}
                     </div>
                   </span>
                 </div>
               </div>
             </div>
 
-            <div class="ms-col ms-role-checkbox">
+            <!-- <div class="ms-col ms-role-checkbox">
               <div class="flex items-center">
                 <div class="ms-checkbox-container ms-checkbox">
                   <input type="checkbox" class="ms-checkbox--input" />
@@ -93,7 +93,7 @@
                   </span>
                 </div>
               </div>
-            </div>
+            </div> -->
 
           </div>
         </div>
@@ -107,7 +107,7 @@
           @click="closePopUp"
         />
         <MsButton
-          class="m-r-12 p-d-16"
+          class=" p-d-16"
           :styleButton="buttonStyle"
           :isShowIcon="false"
           :msButtonText="buttonName"
@@ -118,6 +118,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 import ProfileImage from './ProfileImage.vue';
 
 export default {
@@ -150,9 +151,13 @@ export default {
     },
     data() {
         return {
-            checks: [false, false],
+            user: {}, // thông tin người dùng
+            checks: [],
             isEdit: false, // thực hiện sửa vai trò
             isDelete: false, // thực hiện xoá dữ liệu
+            roles: [], // mảng vai trò
+            roleNames:[], 
+            test: [{}]
         };
     },
     methods: {
@@ -171,10 +176,15 @@ export default {
          * Ngày tạo: (10/8/2022)
          */
         change(index) {
-            if (this.checks[index])
-                this.checks[index] = false;
-            else
-                this.checks[index] = true;
+            if (this.checks[index]){
+              this.checks[index] = false;
+              this.roles[index].status = 2;
+            }
+            else{
+              this.checks[index] = true;
+              this.roles[index].status = 1;
+            }
+                
         },
 
         /**
@@ -183,15 +193,67 @@ export default {
          * Ngày tạo: (10/8/2022)
          */
         btnYes() {
-            console.log(this.userInfo.roleID);
+          // for(var i = 0; i< this.roles.length; i++)
+          // {
+          //   this.roles[i].userID = this.user.userID;
+          //   this.roles[i].status = 3;
+          // }  
+            //  console.log(this.roles);
+            var me = this;
+           axios
+            .put(
+              `https://localhost:7087/api/v1/UserRoles/putAll/`, me.roles
+            )
+            .then(function (res) {
+              console.log(res);
+            })
+            .catch(function (res) {
+              console.log(res);
+            });
         }
     },
-    created() {
-        if (this.editMode == 0)
-            this.isEdit = true;
-        if (this.editMode == 1)
-            this.isDelete = true;
-        // console.log(this.userInfo);
+      async created() {
+      var me = this;
+      this.user = JSON.parse(JSON.stringify(this.userInfo));
+
+      if(this.user.roleName)
+        this.roleNames = this.user.roleName.split(", ");
+      // hiển thị nội dung cập nhật hoặc sửa
+      if (this.editMode == 0)
+          this.isEdit = true;
+      if (this.editMode == 1)
+          this.isDelete = true;
+      
+      // lấy dữ liệu từ bảng role khi thực hiện sửa vai trò
+      if(this.isEdit){
+        await axios
+        .get(
+          `https://localhost:7087/api/v1/Roles`
+        )
+        .then(function (res) {
+          me.roles = res.data;
+          console.log(me.roles);
+         
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
+      }
+
+      // thêm thuộc tính cho đối tượng trong mảng
+      for(var i = 0; i< me.roles.length; i++)
+      {
+        me.roles[i].index = i;
+        me.roles[i].userID = me.user.userID;
+        me.roles[i].status = 3;
+
+        if(me.roleNames.includes(me.roles[i].roleName))
+          me.checks.push(true);
+        else
+          me.checks.push(false);
+      } 
+      
+      
     },
     components: { ProfileImage }
 };

@@ -23,7 +23,7 @@
             <div class="ms-icon-default flex items-center justify-center p-l-8">
               <i class="ms-icon pre-icon mi-search"></i>
             </div>
-            <input type="text" placeholder="Tìm kiếm" class="ms-input-item" ref="hoang"/>
+            <input type="text" placeholder="Tìm kiếm" class="ms-input-item" ref="hoang" v-model="keySearch" @keyup="search"/>
           </div>
         </div>
       </span>
@@ -33,7 +33,7 @@
       class="list-customize-column p-b-12"
       style="height: 250px; overflow: auto"
     >
-      <div class="list-group-item">
+      <div class="list-group-item" v-if="arrayShow[0]">
         <div
           class="flex items-center justify-between"
           style="padding: 8px; height: 42px"
@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <div class="list-group-item">
+      <div class="list-group-item" v-if="arrayShow[1]">
         <div
           class="flex items-center justify-between"
           style="padding: 8px; height: 42px"
@@ -83,7 +83,7 @@
         </div>
       </div>
 
-      <div class="list-group-item">
+      <div class="list-group-item" v-if="arrayShow[2]">
         <div
           class="flex items-center justify-between"
           style="padding: 8px; height: 42px"
@@ -112,7 +112,7 @@
         </div>
       </div>
 
-      <div class="list-group-item">
+      <div class="list-group-item" v-if="arrayShow[3]">
         <div
           class="flex items-center justify-between"
           style="padding: 8px; height: 42px"
@@ -141,7 +141,7 @@
         </div>
       </div>
 
-      <div class="list-group-item">
+      <div class="list-group-item" v-if="arrayShow[4]">
         <div
           class="flex items-center justify-between"
           style="padding: 8px; height: 42px"
@@ -170,7 +170,7 @@
         </div>
       </div>
 
-      <div class="list-group-item">
+      <div class="list-group-item" v-if="arrayShow[5]">
         <div
           class="flex items-center justify-between"
           style="padding: 8px; height: 42px"
@@ -199,7 +199,7 @@
         </div>
       </div>
 
-      <div class="list-group-item">
+      <div class="list-group-item" v-if="arrayShow[6]">
         <div
           class="flex items-center justify-between"
           style="padding: 8px; height: 42px"
@@ -238,7 +238,7 @@
          @click="getDefaultCustomize"
       />
       <MsButton
-        class="m-r-12 p-d-16"
+        class="p-d-16"
         :styleButton="'ms-btn-primary'"
         :isShowIcon="false"
         :msButtonText="'Áp dụng'"
@@ -251,9 +251,19 @@
 <script>
     export default {
         name: "CustomizeTable",
+
+        props:{
+          columnVisible:{
+            type: Array
+          }
+        },
+
         data(){
             return {
-                checkboxs: [false, false, false, false, false], // mảng danh sách trạng thái các input
+              keySearch: "",
+              arrayName: ["Mã nhân viên", "Họ và tên", "Phòng ban", "Vị trí công việc", "Email", "Vai trò", "Trạng thái"],
+              arrayShow: [true, true, true, true, true, true, true],
+              checkboxs: [false, false, false, false, false], // mảng danh sách trạng thái các input
             }
         }, 
         methods: {
@@ -304,14 +314,32 @@
           getDefaultCustomize(){
             for(var i=0; i<this.checkboxs.length; i++)
               this.checkboxs[i] = true;
+          },
+
+          searchCustomName(){
+            if(this.keySearch){
+            for(var i = 0; i< this.arrayName.length; i++)
+              {
+                if(!this.arrayName[i].toLowerCase().includes(this.keySearch.toLowerCase()))
+                  this.arrayShow[i] = false;
+              }
+            }
+            else
+              this.arrayShow = [true, true, true, true, true, true, true];           
+          },
+
+          search(){
+            setTimeout(()=> this.searchCustomName(), 1000);
           }
+          
 
             
         },
 
         created() {
-           this.$nextTick(() => this.$refs.hoang.focus());
-           window.addEventListener("click", this.close);
+          this.checkboxs = JSON.parse(JSON.stringify(this.columnVisible));
+          this.$nextTick(() => this.$refs.hoang.focus());
+          window.addEventListener("click", this.close);
         },
 
         beforeUnmount() {

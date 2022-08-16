@@ -43,6 +43,7 @@
 }
 
 .user-detail-info {
+    margin-bottom: 16px;
     margin-left: 0%;
     width: 75%;
 }
@@ -73,6 +74,7 @@
 
 .detail-work-info {
     margin-top: 20px;
+    line-height: 23px;
 }
 
 .prop-detail-name {

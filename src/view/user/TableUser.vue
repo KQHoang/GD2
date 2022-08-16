@@ -38,7 +38,7 @@
           ></div>
 
           <!-- Pop up tuỳ chỉnh cột trong bảng user -->
-          <CustomizeTable @closeCustomizeTable="closeCustomizeTable" v-if="isShowCustomize" @columnCustomizeTable="columnCustomizeTable"/>
+         
         </div>
       </div>
 
@@ -273,17 +273,18 @@
                             <div class="bold line-height-48">Vai trò</div>
                           </div>
 
-                          <div
-                            class="datagrid-detail-header datagrid-detail-hover p-16"
-                          >
-                            <div class="line-height-48">Nhân viên</div>
+                          <div v-for="item in roleNames" :key="item">
+                            <div class="datagrid-detail-header datagrid-detail-hover p-16">
+                              <div class="line-height-48">{{item}}</div>
+                            </div>
                           </div>
+                         
 
-                          <div
+                          <!-- <div
                             class="datagrid-detail-header datagrid-detail-hover p-16"
                           >
                             <div class="line-height-48">Quản trị hệ thống</div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -337,6 +338,8 @@
       </div>
     </div>
   </div>
+   <CustomizeTable @closeCustomizeTable="closeCustomizeTable" v-if="isShowCustomize"
+          :columnVisible="columnVisible" @columnCustomizeTable="columnCustomizeTable"/>
 </template>
 
 <script>
@@ -366,7 +369,8 @@ export default {
       isShowCustomize: false, // hiển thị tuỳ chỉnh bảng người dùng
       userInfo: {}, // thông tin người dùng gửi sang pop up
       editMode: 0, // 0 - sửa vai trò, 1 - xoá người dùng
-      columnVisible: [true, true, true, true, true],
+      columnVisible: [true, true, true, true, true], // mảng ẩn hiện cột bảng
+      roleNames:[], // mảng tên vai trò
     };
   },
 
@@ -446,12 +450,15 @@ export default {
     },
 
     /**
-     * hiện thông tin chi tiết nhân viên
+     * hiển thị thông tin chi tiết nhân viên
      * Khuất Quang Hoàng (2/8/2022)
      */
     showUserDetail(selectRowsData) {
       this.isShowDetail = true;
       this.userInfo = selectRowsData.data;
+      if(this.roleNames != null)
+        this.roleNames = this.userInfo.roleName.split(", ");
+      console.log(this.userInfo);
     },
 
     /**
