@@ -192,17 +192,19 @@ export default {
          * Người tạo: Khuất Quang Hoàng 
          * Ngày tạo: (10/8/2022)
          */
-        btnYes() {
+       async btnYes() {
           var me = this;
 
           // thực hiện cập nhật vai trò
           if(this.isEdit){
-             axios
+            await axios
             .put(
               `https://localhost:7087/api/v1/UserRoles/putAll/`, me.roles
             )
             .then(function (res) {
               console.log(res);
+              me.$emit("reLoad");
+              me.$emit("closePopUp", true);
             })
             .catch(function (res) {
               console.log(res);
@@ -210,12 +212,14 @@ export default {
           }
 
           if(this.isDelete){
-            axios
+            await axios
             .delete(
               `https://localhost:7087/api/v1/Users/${me.user.userID}`, 
             )
             .then(function (res) {
               console.log(res);
+              me.$emit("reLoad");
+              me.$emit("closePopUp", true);
             })
             .catch(function (res) {
               console.log(res);

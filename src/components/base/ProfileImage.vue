@@ -8,11 +8,12 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        font-size: 14px;
+        font-size: 16px;
         color: #fff;
         text-align: center;
         line-height: 32px;
         margin-right: 8px;
+        font-weight: 700;
         }
     .color9{
         background: red;

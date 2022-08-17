@@ -41,7 +41,7 @@
            
             <DxDataGrid
               ref="dataGridAddUser"
-              id="gridContainer"
+              id="gridContainer1"
               :key-expr="ID"
               :data-source="userList"
               column-resizing-mode="widget"
@@ -72,7 +72,7 @@
                 cell-template="userCodeColumn"
               />
               <template #userCodeColumn="{ data }">
-               <DxTextBox v-model="userList[data.rowIndex].userCode"/>
+                 <DxTextBox v-model="userList[data.rowIndex].userCode"/>
               </template>
 
               <!-- Tên người dùng -->
@@ -103,7 +103,7 @@
                   placeholder="Chọn vai trò"
                   class="ms-select-box w-full"
                   v-model="userList[data.rowIndex].departmentID"
-                  :onValueChanged="showValueSelect"
+                  
                 />
               </template>
 
@@ -123,7 +123,7 @@
                   placeholder="Chọn vai trò"
                   class="ms-select-box w-full"
                   v-model="userList[data.rowIndex].positionID"
-                  :onValueChanged="showValueSelect"
+                  
                 />
               </template>
 
@@ -155,7 +155,7 @@
                   value-expr="roleID"
                   class="ms-select-box w-full"
                   v-model="userList[data.rowIndex].roleID"
-                  :onValueChanged="showValueSelect"
+                  
                 />
               </template>
 
@@ -175,7 +175,7 @@
                   placeholder="Chọn vai trò"
                   class="ms-select-box"
                   v-model="userList[data.rowIndex].status"
-                  :onValueChanged="showValueSelect"
+                  
                 />
               </template>
 
@@ -192,7 +192,7 @@
                         <div class="button-comand-wrap btn-more">
                           <div
                             class="icon-delete-custom icon-hidden"
-                            @click="deleteUser(data.index)"
+                            @click="deleteUser(data.rowIndex)"
                           ></div>
                         </div>
                       </div>
@@ -285,8 +285,11 @@ export default {
          * Ngày tạo: 16/8/2022
          */
         deleteUser(index){
+          // debugger
           this.userList.splice(index, 1);
-          this.$refs.dataGridAddUser.instance.refresh(true);
+          // setTimeout(() => ;
+          this.$refs.dataGridAddUser.instance.refresh(false);
+          // console.log(index);
         },
 
         /**
@@ -303,6 +306,8 @@ export default {
           )
           .then(function (res) {
             console.log(res);
+            me.$emit("reLoad");
+            me.$emit("closePopUp", false);
           })
           .catch(function (res) {
             console.log(res);

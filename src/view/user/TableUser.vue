@@ -14,6 +14,8 @@
                 type="text"
                 placeholder="Tìm kiếm người dùng"
                 class="ms-input-item"
+                v-model="keySearch"
+                @keyup="searchUer"
               />
             </div>
           </div>
@@ -49,6 +51,7 @@
             <div class="tb-datagrid tb-gridbase-container h-full">
               <!-- :data-source="employees" -->
               <div class="tb-datagrid-header tb-datagrid-nowrap h-full">
+                <HLoading v-if="isShowLoading"/>
                 <DxDataGrid
                   id="gridContainer"
                   :key-expr="ID"
@@ -169,6 +172,7 @@
           :popUpTitle="popUpTitle"
           :buttonStyle="buttonStyle"
           @closePopUp="closePopUp"
+          @reLoad="updateData"
           :editMode="editMode"
           :userInfo="userInfo"
         />
@@ -371,7 +375,7 @@ export default {
       editMode: 0, // 0 - sửa vai trò, 1 - xoá người dùng
       columnVisible: [true, true, true, true, true], // mảng ẩn hiện cột bảng
       roleNames:[], // mảng tên vai trò
-      
+      isShowLoading: false, // hiển thị loading dữ liệu
     };
   },
 
@@ -530,6 +534,7 @@ export default {
      */
     async getPaging(){
       var me = this;
+      this.isShowLoading = true;
       await axios
         .get(
           `https://localhost:7087/api/v1/Users/filter?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&filter=${this.keySearch}`
@@ -539,6 +544,7 @@ export default {
           me.totalRecord = res.data.totalRecord;
           me.recordStart = res.data.recordStart;
           me.recordEnd = res.data.recordEnd;
+          setTimeout(()=>me.isShowLoading = false, 1000);
         })
         .catch(function (res) {
           console.log(res);
@@ -590,6 +596,24 @@ export default {
      */
     columnCustomizeTable(array){
       this.columnVisible = array;
+    }, 
+
+    /**
+     * Load lại dữ liệu khi thực hiện thêm mới
+     * Người tạo: Khuất Quang Hoàng 
+     * Ngày tạo: (11/8/2022)
+     */
+    updateData(){
+      this.getPaging();
+    }, 
+
+    /**
+     * Thực hiện tìm kiếm người dùng
+     * Người tạo: Khuất Quang Hoàng 
+     * Ngày tạo: (17/8/2022)
+     */
+    searchUer(){
+      setTimeout(() => this.getPaging(), 500);
     }
   },
 
