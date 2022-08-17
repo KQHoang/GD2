@@ -193,14 +193,11 @@ export default {
          * Ngày tạo: (10/8/2022)
          */
         btnYes() {
-          // for(var i = 0; i< this.roles.length; i++)
-          // {
-          //   this.roles[i].userID = this.user.userID;
-          //   this.roles[i].status = 3;
-          // }  
-            //  console.log(this.roles);
-            var me = this;
-           axios
+          var me = this;
+
+          // thực hiện cập nhật vai trò
+          if(this.isEdit){
+             axios
             .put(
               `https://localhost:7087/api/v1/UserRoles/putAll/`, me.roles
             )
@@ -210,6 +207,21 @@ export default {
             .catch(function (res) {
               console.log(res);
             });
+          }
+
+          if(this.isDelete){
+            axios
+            .delete(
+              `https://localhost:7087/api/v1/Users/${me.user.userID}`, 
+            )
+            .then(function (res) {
+              console.log(res);
+            })
+            .catch(function (res) {
+              console.log(res);
+            });
+          }
+          
         }
     },
       async created() {

@@ -57,3 +57,22 @@ td .add-user-input:focus {
 .text-align {
     text-align: center;
 }
+
+.grid-container-add.grid-container {
+    height: auto;
+}
+
+.grid-container-add.grid-container .tb-widget {
+    height: auto;
+}
+
+.grid-container-add.grid-container .dx-datagrid .dx-row>td {
+    padding: 6px;
+    height: 60px!important;
+    vertical-align: middle!important;
+}
+
+.grid-container-add.grid-container .dx-row.dx-header-row>td {
+    background: #f3f8ff!important;
+    height: 48px !important;
+}

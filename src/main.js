@@ -11,6 +11,7 @@ import DxPopup from 'devextreme-vue/popup'
 import DxTagBox from 'devextreme-vue/tag-box';
 import { createRouter, createWebHistory } from 'vue-router'
 import GridUser from './view/user/TableUser.vue'
+import DxTextBox from 'devextreme-vue/text-box';
 import {
     DxDataGrid,
     DxColumn
@@ -28,6 +29,7 @@ const router = createRouter({
 })
 
 const app = createApp(App);
+app.component("DxTextBox", DxTextBox)
 app.component("MsButton", MsButton)
 app.component("MSDropDown", MSDropDown)
 app.component("DxSelectBox", DxSelectBox)

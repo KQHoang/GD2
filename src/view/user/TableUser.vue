@@ -371,6 +371,7 @@ export default {
       editMode: 0, // 0 - sửa vai trò, 1 - xoá người dùng
       columnVisible: [true, true, true, true, true], // mảng ẩn hiện cột bảng
       roleNames:[], // mảng tên vai trò
+      
     };
   },
 
