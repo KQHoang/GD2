@@ -288,3 +288,11 @@
     border-radius: 50%;
     background-color: #02a3ec!important;
 }
+
+.content-delete-popup {
+    color: #171b2a;
+}
+
+.name-user-delete {
+    font-weight: 700;
+}

@@ -9,7 +9,7 @@
 
 /* hover đổi màu border*/
 
-.dx-texteditor.dx-state-hover {
+.dx-texteditor.dx-state-hover.dx-editor-outlined {
     border-color: var(--input-hover-border-color);
 }
 
@@ -66,4 +66,12 @@
 
 .dx-dropdownlist-popup-wrapper .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item-content {
     padding: 8px!important;
+}
+
+.dx-texteditor.dx-editor-outlined {
+    border-color: #e7e8e9;
+}
+
+.select-box-add .dx-placeholder::before {
+    padding: 7px !important;
 }

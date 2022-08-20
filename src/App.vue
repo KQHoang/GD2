@@ -6,7 +6,7 @@
       <div class="main-view flex flex-column">
         <div class="flex main-content">
           <TheMenu />
-          <TheContent />
+          <!-- <TheContent /> -->
         </div>
       </div>
     </div>
@@ -16,13 +16,13 @@
 <script>
 import TheNav from "./components/layout/TheNav.vue";
 import TheMenu from "./components/layout/TheMenu.vue";
-import TheContent from "./components/layout/TheContent.vue";
+// import TheContent from "./components/layout/TheContent.vue";
 export default {
   name: "App",
   components: {
     TheNav,
     TheMenu,
-    TheContent,
+    // TheContent,
   },
 };
 </script>

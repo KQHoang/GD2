@@ -10,6 +10,7 @@
           <div
             class="ms-icon-container flex items-center justify-center btn-icon-1"
             @click="closeCustomizeTable"
+            title="Đóng"
           >
             <i
               class="ms-icon notranslate icon-scale mi-close-2"
@@ -18,7 +19,8 @@
         </div>
       </div>
       <span class="input-search-user">
-        <div style="height: 36px; width: 100%">
+        <div class="w-full height-36">
+          <!-- style="height: 36px; width: 100%"  -->
           <div class="ms-input flex w-full">
             <div class="ms-icon-default flex items-center justify-center p-l-8">
               <i class="ms-icon pre-icon mi-search"></i>
@@ -30,24 +32,21 @@
     </header>
 
     <div
-      class="list-customize-column p-b-12"
-      style="height: 250px; overflow: auto"
-    >
+      class="list-customize-column p-b-12"  >
+    <!-- style=" height: 250px; overflow: auto" -->
       <div class="list-group-item" v-if="arrayShow[0]">
         <div
-          class="flex items-center justify-between"
-          style="padding: 8px; height: 42px"
+          class="flex items-center justify-between item-checkbox-custom"
         >
-          <div class="item-customize ms-checkbox">
-            <div class="fdsafs">
+          <div class="item-customize ms-checkbox cursor-pointer">
+            <div >
               <input type="checkbox" class="ms-checkbox--input" />
               <span
-                class="icon-square-uncheck checkmark icon-square-check check-box-disable"
-                style="top: -2px"
+                class="icon-square-uncheck checkmark icon-square-check check-box-disable top--2"
               ></span>
               <!-- icon-square-uncheck  -->
               <span class="con-slot-label">
-                <div style="margin-top: 2px" class="label-role-checkbox">
+                <div class="label-role-checkbox lable-role-width">
                   Mã nhân viên
                 </div>
               </span>
@@ -60,19 +59,19 @@
 
       <div class="list-group-item" v-if="arrayShow[1]">
         <div
-          class="flex items-center justify-between"
-          style="padding: 8px; height: 42px"
+          class="flex items-center justify-between item-checkbox-custom"
         >
-          <div class="item-customize ms-checkbox">
-            <div class="fdsafs">
+          <!-- style="padding: 8px; height: 42px" -->
+          <div class="item-customize ms-checkbox cursor-pointer" >
+            <div>
               <input type="checkbox" class="ms-checkbox--input" />
               <span
-                class="icon-square-uncheck checkmark icon-square-check check-box-disable"
-                style="top: -2px"
+                class="icon-square-uncheck checkmark icon-square-check check-box-disable top--2"
+                
               ></span>
               <!-- icon-square-uncheck  -->
               <span class="con-slot-label">
-                <div style="margin-top: 2px" class="label-role-checkbox">
+                <div class="label-role-checkbox lable-role-width">
                   Họ và tên
                 </div>
               </span>
@@ -85,23 +84,24 @@
 
       <div class="list-group-item" v-if="arrayShow[2]">
         <div
-          class="flex items-center justify-between"
-          style="padding: 8px; height: 42px"
+          class="flex items-center justify-between item-checkbox-custom"
         >
-          <div class="item-customize ms-checkbox">
-            <div class="fdsafs">
+          <!-- style="padding: 8px; height: 42px" -->
+          <div class="item-customize ms-checkbox cursor-pointer">
+            <div>
               <input type="checkbox" class="ms-checkbox--input" />
               <span
-                class="icon-square-uncheck checkmark"
+                class="icon-square-uncheck checkmark top--2"
                 @click="change(0)"
                 :class="{
                   'icon-square-check': this.checkboxs[0] == true,
                 }"
-                style="top: -2px"
+                
               ></span>
+              <!-- style="top: -2px" -->
               <!-- icon-square-uncheck  -->
-              <span class="con-slot-label">
-                <div style="margin-top: 2px" class="label-role-checkbox">
+              <span class="con-slot-label" @click="change(0)">
+                <div class="label-role-checkbox lable-role-width">
                   Phòng ban
                 </div>
               </span>
@@ -114,23 +114,23 @@
 
       <div class="list-group-item" v-if="arrayShow[3]">
         <div
-          class="flex items-center justify-between"
-          style="padding: 8px; height: 42px"
+          class="flex items-center justify-between item-checkbox-custom"
         >
-          <div class="item-customize ms-checkbox">
-            <div class="fdsafs">
+          <!-- style="padding: 8px; height: 42px" -->
+          <div class="item-customize ms-checkbox cursor-pointer">
+            <div>
               <input type="checkbox" class="ms-checkbox--input" />
               <span
-                class="icon-square-uncheck checkmark"
+                class="icon-square-uncheck checkmark top--2"
                 @click="change(1)"
                 :class="{
                   'icon-square-check': this.checkboxs[1] == true,
                 }"
-                style="top: -2px"
+                
               ></span>
               <!-- icon-square-uncheck  -->
-              <span class="con-slot-label">
-                <div style="margin-top: 2px" class="label-role-checkbox">
+              <span class="con-slot-label" @click="change(1)">
+                <div class="label-role-checkbox lable-role-width">
                   Vị trí công việc
                 </div>
               </span>
@@ -143,23 +143,22 @@
 
       <div class="list-group-item" v-if="arrayShow[4]">
         <div
-          class="flex items-center justify-between"
-          style="padding: 8px; height: 42px"
+          class="flex items-center justify-between item-checkbox-custom"
         >
-          <div class="item-customize ms-checkbox">
-            <div class="fdsafs">
+          <!-- style="padding: 8px; height: 42px" -->
+          <div class="item-customize ms-checkbox cursor-pointer">
+            <div>
               <input type="checkbox" class="ms-checkbox--input" />
               <span
-                class="icon-square-uncheck checkmark"
+                class="icon-square-uncheck checkmark top--2"
                 @click="change(2)"
                 :class="{
                   'icon-square-check': this.checkboxs[2] == true,
                 }"
-                style="top: -2px"
               ></span>
               <!-- icon-square-uncheck  -->
-              <span class="con-slot-label">
-                <div style="margin-top: 2px" class="label-role-checkbox">
+              <span class="con-slot-label" @click="change(2)">
+                <div class="label-role-checkbox lable-role-width">
                   Email
                 </div>
               </span>
@@ -172,23 +171,22 @@
 
       <div class="list-group-item" v-if="arrayShow[5]">
         <div
-          class="flex items-center justify-between"
-          style="padding: 8px; height: 42px"
+          class="flex items-center justify-between item-checkbox-custom"
         >
-          <div class="item-customize ms-checkbox">
-            <div class="fdsafs">
+          <div class="item-customize ms-checkbox cursor-pointer">
+            <div>
               <input type="checkbox" class="ms-checkbox--input" />
               <span
-                class="icon-square-uncheck checkmark"
+                class="icon-square-uncheck checkmark top--2"
                 @click="change(3)"
                 :class="{
                   'icon-square-check': this.checkboxs[3] == true,
                 }"
-                style="top: -2px"
+              
               ></span>
               <!-- icon-square-uncheck  -->
-              <span class="con-slot-label">
-                <div style="margin-top: 2px" class="label-role-checkbox">
+              <span class="con-slot-label" @click="change(3)">
+                <div class="label-role-checkbox lable-role-width">
                   Vai trò
                 </div>
               </span>
@@ -201,23 +199,21 @@
 
       <div class="list-group-item" v-if="arrayShow[6]">
         <div
-          class="flex items-center justify-between"
-          style="padding: 8px; height: 42px"
+          class="flex items-center justify-between item-checkbox-custom"
         >
-          <div class="item-customize ms-checkbox">
-            <div class="fdsafs">
+          <div class="item-customize ms-checkbox cursor-pointer">
+            <div>
               <input type="checkbox" class="ms-checkbox--input" />
               <span
-                class="icon-square-uncheck checkmark"
+                class="icon-square-uncheck checkmark top--2"
                 @click="change(4)"
                 :class="{
                   'icon-square-check': this.checkboxs[4] == true,
                 }"
-                style="top: -2px"
               ></span>
               <!-- icon-square-uncheck  -->
-              <span class="con-slot-label">
-                <div style="margin-top: 2px" class="label-role-checkbox">
+              <span class="con-slot-label" @click="change(4)">
+                <div class="label-role-checkbox lable-role-width">
                   Trạng thái
                 </div>
               </span>
@@ -229,7 +225,7 @@
       </div>
     </div>
 
-    <footer class="ms-popup-footer">
+    <footer class="ms-popup-footer ms-footer-custom">
       <MsButton
         class="m-r-12 p-d-16"
         :styleButton="'ms-btn-default'"

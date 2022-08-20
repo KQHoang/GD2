@@ -14,7 +14,7 @@
           >
             <i
               class="ms-icon notranslate icon-scale mi-close-2"
-              @click="closePopUp"
+              @click="closePopUp" title="Đóng"
             ></i>
           </div>
         </div>
@@ -23,9 +23,9 @@
       <div class="ms-popup--content">
         <!-- nội dung pop up xoá -->
         <div class="ms-content-delete" v-if="isDelete">
-          <span style="color: #171b2a"
+          <span class="content-delete-popup"
             >Bạn có chắc chắn muốn xoá
-            <span style="font-weight: 700">{{ user.fullName }}</span>
+            <span class="name-user-delete">{{ user.fullName }}</span>
             khỏi ứng dụng AMIS Quy trình không?</span
           >
         </div>
@@ -55,7 +55,7 @@
           </div>
           <br />
 
-          <div style="margin-bottom: 4px">
+          <div  class="m-b-4">
             <label class="bold lab-role">
             Vai trò
             <span class="required"> * </span>
@@ -73,7 +73,7 @@
                   <input type="checkbox" class="ms-checkbox--input" />
                   <span class="icon-square-uncheck checkmark" @click="change(item.index)" :class="{'icon-square-check': this.checks[item.index] == true}"></span> 
                   <span class="con-slot-label">
-                    <div class="label-role-checkbox">
+                    <div class="label-role-checkbox" :title="item.roleName">
                       <!-- Quản trị ứng dụng quy tình -->{{item.roleName}}
                     </div>
                   </span>
@@ -167,7 +167,8 @@ export default {
          * Ngày tạo: (10/8/2022)
          */
         closePopUp() {
-            this.$emit("closePopUp", true);
+            // truyền false: không đóng form chi tiết nếu có
+            this.$emit("closePopUp", false);
         },
 
         /**
@@ -199,7 +200,7 @@ export default {
           if(this.isEdit){
             await axios
             .put(
-              `https://localhost:7087/api/v1/UserRoles/putAll/`, me.roles
+              `https://localhost:44328/api/v1/UserRoles/putAll/`, me.roles
             )
             .then(function (res) {
               console.log(res);
@@ -214,7 +215,7 @@ export default {
           if(this.isDelete){
             await axios
             .delete(
-              `https://localhost:7087/api/v1/Users/${me.user.userID}`, 
+              `https://localhost:44328/api/v1/Users/${me.user.userID}`, 
             )
             .then(function (res) {
               console.log(res);
@@ -244,7 +245,7 @@ export default {
       if(this.isEdit){
         await axios
         .get(
-          `https://localhost:7087/api/v1/Roles`
+          `https://localhost:44328/api/v1/Roles`
         )
         .then(function (res) {
           me.roles = res.data;

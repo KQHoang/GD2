@@ -24,12 +24,18 @@
             <div class="name-tab">Kết nối</div>
         </div>
     </div>
+
+    <GridUser/>
 </template>
 
 <script>
-
+import GridUser from '../../view/user/TableUser.vue'
 export default{
   name: "TheMenu" ,
+  components: {
+    GridUser
+  }, 
+
   data(){
     return {
        actived: 1

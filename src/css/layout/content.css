@@ -144,3 +144,18 @@ items-center  */
     -webkit-mask-position: -264px -144px;
     -webkit-mask-repeat: no-repeat;
 }
+
+.header-input-table {
+    height: 60px
+}
+
+.input-search-content {
+    height: 36px;
+    width: 240px;
+}
+
+.ms-input-item:placeholder-shown {
+    color: #999;
+    opacity: 0.7;
+    font-size: 14px;
+}

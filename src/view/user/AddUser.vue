@@ -2,12 +2,7 @@
  <div class="ms-component con-ms-popup center ms-popup-primary p-t-0">
     <div class="ms-popup-background"></div>
     <div
-      class="ms-popup flex flex-col"
-      style="
-        background: rgb(255, 255, 255);
-        width: 992px;
-        min-width: 500px;
-        height: 100%; ">
+      class="ms-popup flex flex-col popup-add-user">
       <header class="ms-popup--header">
         <div class="ms-popup--title">
           <h2>
@@ -27,16 +22,16 @@
       </header>
 
       <div class="ms-popup--content">
-        <div
-          style="
+        <div class="content-table-add"
+        >
+          <!-- style="
             height: 100%;
             width: 100%;
             position: relative;
             overflow: auto;
             text-indent: 0;
             border: none;
-          "
-        >
+          " -->
           <div class="tb-datagrid-header tb-datagrid-nowrap grid-container grid-container-add">
            
             <DxDataGrid
@@ -55,10 +50,22 @@
               :onRowClick="showUserDetail"
               :paging="{enabled: false}"
             >
-              <DxColumn caption="STT" :width="60" cell-template="indexColumn" />
+              <DxColumn caption="STT" :width="60" cell-template="indexColumn" 
+              header-cell-template="headerTableAddUser"
+              />
+
+              <!-- phần header -->
+              <template #headerTableAddUser="{data}">
+                  <div  class="p-lr-16" :class="{'label-header-dxgrid': data.columnIndex != 0}">
+                  <!-- style="padding: 0 16px;" -->
+                    {{data.column.caption}} 
+                  </div>
+              </template>
+
               <template #indexColumn="{ data }">
                 <div :title="data.rowIndex + 1" class="wrap-text">
-                  <div class="nomal line-clamp-2 d-flex justify-center" style="text-align: center">
+                  <div class="nomal line-clamp-2 d-flex justify-center text-align" >
+                    <!-- style="text-align: center" -->
                     {{ data.rowIndex + 1 }}
                   </div>
                 </div>
@@ -70,6 +77,7 @@
                 data-field="userCode"
                 caption="Mã nhân viên"
                 cell-template="userCodeColumn"
+                header-cell-template="headerTableAddUser"
               />
               <template #userCodeColumn="{ data }">
                  <DxTextBox v-model="userList[data.rowIndex].userCode"/>
@@ -82,6 +90,7 @@
                 data-field="fullName"
                 caption="Họ và tên"
                 cell-template="userNameColumn"
+                header-cell-template="headerTableAddUser"
               />
               <template #userNameColumn="{ data }">
                 <DxTextBox v-model="userList[data.rowIndex].fullName"/>
@@ -94,6 +103,7 @@
                 data-field="departmentID"
                 caption="Phòng ban"
                 cell-template="userDepartmentColumn"
+                header-cell-template="headerTableAddUser"
               />
               <template #userDepartmentColumn="{ data }">
                 <DxSelectBox 
@@ -101,7 +111,7 @@
                   display-expr="departmentName"
                   value-expr="departmentID"
                   placeholder="Chọn vai trò"
-                  class="ms-select-box w-full"
+                  class="ms-select-box select-box-add w-full"
                   v-model="userList[data.rowIndex].departmentID"
                   
                 />
@@ -114,6 +124,7 @@
                 data-field="positionID"
                 caption="Vị trí công việc"
                 cell-template="userPositionColumn"
+                header-cell-template="headerTableAddUser"
               />
               <template #userPositionColumn="{ data }">
                 <DxSelectBox 
@@ -121,7 +132,7 @@
                   display-expr="positionName"
                   value-expr="positionID"
                   placeholder="Chọn vai trò"
-                  class="ms-select-box w-full"
+                  class="ms-select-box select-box-add w-full"
                   v-model="userList[data.rowIndex].positionID"
                   
                 />
@@ -134,6 +145,7 @@
                 data-field="email"
                 caption="Email"
                 cell-template="userEmailColumn"
+                header-cell-template="headerTableAddUser"
               />
               <template #userEmailColumn="{ data }">
                <DxTextBox v-model="userList[data.rowIndex].email"/>
@@ -146,6 +158,7 @@
                 data-field="roleID"
                 caption="Vai trò"
                 cell-template="userRoleColumn"
+                header-cell-template="headerTableAddUser"
               />
               <template #userRoleColumn="{ data }">
                 
@@ -166,6 +179,7 @@
                 data-field="status"
                 caption="Trạng thái"
                 cell-template="userStatusColumn"
+                header-cell-template="headerTableAddUser"
               />
               <template #userStatusColumn="{ data }">
                 <DxSelectBox 
@@ -173,7 +187,7 @@
                   display-expr="statusName"
                   value-expr="ID"
                   placeholder="Chọn vai trò"
-                  class="ms-select-box"
+                  class="ms-select-box select-box-add w-full"
                   v-model="userList[data.rowIndex].status"
                   
                 />
@@ -184,10 +198,10 @@
                     :max-width="68"
                     :width="68"
                     cell-template="dropDownBoxEditor"
-                    data-field="userID"
                   />
               <template #dropDownBoxEditor="{ data }">
-                    <div class="flex m-8" style="height: 50px">
+                    <div class="flex m-8 height-50" >
+                      <!-- style="height: 50px" -->
                       <div class="style-button">
                         <div class="button-comand-wrap btn-more">
                           <div
@@ -238,12 +252,12 @@ export default {
     name: "AddUser",
     data(){
       return {
-       simpleProducts:[{ID: 1, Name: "Nhân sự"},{ID: 2, Name: "Nhân viên"}], // mảng demo các item trong selectbox
         index: 1, // số dòng trong bảng
         userList: [], // mảng người dùng
         departments: [], // mảng phòng ban
         positions: [], // mảng vị trí công việc
         roles: [], // mảng vai trò
+        newUserCode: "", // mã nhân viên mới
         status: [{ID: 0, statusName:"Đang hoạt động"}, {ID: 1, statusName:"Chờ xác nhận"},
                 {ID: 2, statusName:"Chưa kích hoạt"}, {ID: 3, statusName:"Ngừng kích hoạt"} ]
       }
@@ -267,12 +281,16 @@ export default {
         addRow(){
           var newUser = {};
           newUser.roleID = [];
-          newUser.userCode = "";
           newUser.fullName = "";
           newUser.departmentID = "";
           newUser.positionID = "";
           newUser.email = "";
           newUser.status = null;
+
+          var oldUserCode = this.userList[this.userList.length-1].userCode;
+          var userCodeSplit = oldUserCode.split("-");
+          var newUserCode = parseInt(userCodeSplit[1]) + 1;
+          newUser.userCode = "NV-"+ newUserCode;
 
           // Thêm người dùng vào trong mảng
           this.userList.push(newUser);
@@ -302,7 +320,7 @@ export default {
           // console.log(this.userList);
           await axios
           .post(
-            ` https://localhost:7087/api/v1/Users/postAll`, me.userList
+            ` https://localhost:44328/api/v1/Users/postAll`, me.userList
           )
           .then(function (res) {
             console.log(res);
@@ -321,12 +339,25 @@ export default {
       var me = this;
       var newUser = {};
       newUser.roleID = [];
-      newUser.userCode = "";
       newUser.fullName = "";
       newUser.departmentID = "";
       newUser.positionID = "";
       newUser.email = "";
       newUser.status = null;
+
+      // lấy mã nhân viên mới
+        await axios
+        .get(
+          `https://localhost:44328/api/v1/Users/NewUserCode`
+        )
+        .then(function (res) {
+          me.newUserCode = res.data;
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
+      
+      newUser.userCode = this.newUserCode;
 
       // Thêm người dùng vào trong mảng
       this.userList.push(newUser);
@@ -334,7 +365,7 @@ export default {
       // lấy dữ liệu cho mảng departments
       await axios
         .get(
-          `https://localhost:7087/api/v1/Departments`
+          `https://localhost:44328/api/v1/Departments`
         )
         .then(function (res) {
           me.departments = res.data;
@@ -346,7 +377,7 @@ export default {
         // lấy dữ liệu cho mảng positions
         await axios
         .get(
-          `https://localhost:7087/api/v1/Positions`
+          `https://localhost:44328/api/v1/Positions`
         )
         .then(function (res) {
           me.positions = res.data;
@@ -358,7 +389,7 @@ export default {
          // lấy dữ liệu cho mảng roles
         await axios
         .get(
-          `https://localhost:7087/api/v1/Roles`
+          `https://localhost:44328/api/v1/Roles`
         )
         .then(function (res) {
           me.roles = res.data;
@@ -366,6 +397,7 @@ export default {
         .catch(function (res) {
           console.log(res);
         });
+       
     }
 };
 </script>
