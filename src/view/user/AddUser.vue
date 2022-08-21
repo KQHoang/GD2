@@ -33,16 +33,16 @@
             border: none;
           " -->
           <div class="tb-datagrid-header tb-datagrid-nowrap grid-container grid-container-add">
-            <table class="table-add-newuser" style="width: 100%; overflow: auto;">
+            <table class="table-add-newuser">
               <thead>
-                <th style="min-width: 60px; width: 60px">STT</th>
-                <th style="min-width: 230px; width: 230px" class="text-align-left">Mã nhân viên</th>
-                <th style="min-width: 230px; width: 230px" class="text-align-left">Họ tên</th>
-                <th style="min-width: 230px; width: 230px" class="text-align-left">Phòng ban</th>
-                <th style="min-width: 230px; width: 230px" class="text-align-left">Vị trí công việc</th>
-                <th style="min-width: 230px; width: 230px" class="text-align-left">Email</th>
-                <th style="min-width: 230px; width: 230px" class="text-align-left" >Vai trò</th>
-                <th style="min-width: 230px; width: 230px" class="text-align-left">Trạng thái</th>
+                <th class="min-width-60">STT</th>
+                <th  class="text-align-left min-width-230">Mã nhân viên</th>
+                <th  class="text-align-left min-width-230">Họ tên</th>
+                <th  class="text-align-left min-width-230">Phòng ban</th>
+                <th  class="text-align-left min-width-230">Vị trí công việc</th>
+                <th  class="text-align-left min-width-230">Email</th>
+                <th  class="text-align-left min-width-230" >Vai trò</th>
+                <th  class="text-align-left min-width-230">Trạng thái</th>
                 <th></th>
               </thead>
               <tbody>
@@ -93,7 +93,7 @@
                   <td >
                     <div :class="{'invalid': this.errorRequireds[index].email == true}">
                       <input type="text" class="w-full" v-model="userList[index].email" @blur="blurColor(userList[index].fullName, index, 'email')"/>
-                      <div class="tooltip-required" style="width: 80px;">Email trống</div>
+                      <div class="tooltip-required width-80">Email trống</div>
                     </div>
                   </td>
                   <td >
@@ -107,7 +107,7 @@
                         @closed="valueChangedBlur(userList[index].roleID, index, 'roleID')"
                         @value-changed="valueChangedBlur(userList[index].roleID, index, 'roleID')"
                       />
-                      <div class="tooltip-required" style="width: 90px;">Vai trò trống</div>
+                      <div class="tooltip-required width-90">Vai trò trống</div>
                     </div>
                   </td>
                   <td>
@@ -122,7 +122,7 @@
                         @closed="valueChangedBlur(userList[index].status, index, 'status')"
                         @value-changed="valueChangedBlur(userList[index].status, index, 'status')"
                       />
-                      <div class="tooltip-required" style="width: 105px;">trạng thái trống</div>
+                      <div class="tooltip-required width-105">trạng thái trống</div>
                     </div>
                   </td>
 
@@ -176,6 +176,11 @@
 
 <script>
 import axios from "axios";
+import addUser from "@/js/services/user/addUser";
+import getNewUserCode from "@/js/services/user/getNewUserCode.js"
+import getDepartment from "@/js/services/departmentServices/getDepartment.js"
+import getRole from "@/js/services/role/getRole";
+import getPosition from "@/js/services/positonServices/getPosition.js"
 export default {
     name: "AddUser",
     data(){
@@ -382,18 +387,19 @@ export default {
           });
 
           if(isValid){
-            await axios
-            .post(
-              ` https://localhost:44328/api/v1/Users/postAll`, me.userList
-            )
-            .then(function (res) {
-              // console.log(res);
-              me.$emit("reLoad");
-              me.$emit("closePopUp", false);
-            })
-            .catch(function (res) {
-              console.log(res);
-            });
+            // await axios
+            // .post(
+            //   ` https://localhost:44328/api/v1/Users/postAll`, me.userList
+            // )
+            // .then(function (res) {
+            //   // console.log(res);
+            //   me.$emit("reLoad");
+            //   me.$emit("closePopUp", false);
+            // })
+            // .catch(function (res) {
+            //   console.log(res);
+            // });
+            await addUser.addUser(me.userList, me);
           }
 
         }
@@ -416,16 +422,17 @@ export default {
 
       this.errorRequireds.push(newValidate);
       // lấy mã nhân viên mới
-        await axios
-        .get(
-          `https://localhost:44328/api/v1/Users/NewUserCode`
-        )
-        .then(function (res) {
-          me.newUserCode = res.data;
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+        // await axios
+        // .get(
+        //   `https://localhost:44328/api/v1/Users/NewUserCode`
+        // )
+        // .then(function (res) {
+        //   me.newUserCode = res.data;
+        // })
+        // .catch(function (res) {
+        //   console.log(res);
+        // });
+      me.newUserCode = await getNewUserCode.getNewUserCode();
       
       newUser.userCode = this.newUserCode;
 
@@ -433,47 +440,75 @@ export default {
       this.userList.push(newUser);
 
       // lấy dữ liệu cho mảng departments
-      await axios
-        .get(
-          `https://localhost:44328/api/v1/Departments`
-        )
-        .then(function (res) {
-          me.departments = res.data;
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+      // await axios
+      //   .get(
+      //     `https://localhost:44328/api/v1/Departments`
+      //   )
+      //   .then(function (res) {
+      //     me.departments = res.data;
+      //   })
+      //   .catch(function (res) {
+      //     console.log(res);
+      //   });
+      me.departments = await getDepartment.getDepartment();
 
         // lấy dữ liệu cho mảng positions
-        await axios
-        .get(
-          `https://localhost:44328/api/v1/Positions`
-        )
-        .then(function (res) {
-          me.positions = res.data;
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+        // await axios
+        // .get(
+        //   `https://localhost:44328/api/v1/Positions`
+        // )
+        // .then(function (res) {
+        //   me.positions = res.data;
+        // })
+        // .catch(function (res) {
+        //   console.log(res);
+        // });
+        me.positions = await getPosition.getPosition();
 
          // lấy dữ liệu cho mảng roles
-        await axios
-        .get(
-          `https://localhost:44328/api/v1/Roles`
-        )
-        .then(function (res) {
-          me.roles = res.data;
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+        // await axios
+        // .get(
+        //   `https://localhost:44328/api/v1/Roles`
+        // )
+        // .then(function (res) {
+        //   me.roles = res.data;
+        // })
+        // .catch(function (res) {
+        //   console.log(res);
+        // });
+        me.roles = await getRole.getRoleList();
        
     }
 };
 </script>
 
 <style scoped>
+.table-add-newuser{
+  width: 100%; 
+  overflow: auto;
+}
 
+.min-width-60{
+  min-width: 60px;
+  width: 60px;
+}
+
+.min-width-230{
+  min-width: 230px;
+  width: 230px;
+}
+
+.width-80{
+  width: 80px;
+}
+
+.width-90{
+  width: 90px;
+}
+
+.width-105{
+  width: 105px;
+}
 .grid-container-add{
   overflow: auto !important;
   max-height: 500px;

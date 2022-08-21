@@ -377,6 +377,9 @@ import CustomizeTable from "./CustomizeTable.vue"
 import AddUser from "../../view/user/AddUser.vue";
 import axios from "axios";
 import HoangEnum from "../../js/enums.js";
+import getRole from "@/js/services/role/getRole";
+import getUserPaging from "@/js/services/user/getUserPaging.js"
+import Resources from "@/js/resources";
 export default {
   name: "TableUer",
   components: {
@@ -534,10 +537,10 @@ export default {
      * Khuất Quang Hoàng (10/8/2022)
      */
     convertStatus(input) {
-      if (input == HoangEnum.Status.Working) return "Đang hoạt động";
-      if (input == HoangEnum.Status.WConfirm) return "Chờ xác nhận";
-      if (input == HoangEnum.Status.NotActive) return "Chưa kích hoạt";
-      if (input == HoangEnum.Status.DeActivation) return "Ngừng kích hoạt";
+      if (input == HoangEnum.Status.Working) return Resources.StatusName.WorkingName;
+      if (input == HoangEnum.Status.WConfirm) return Resources.StatusName.WConfirmName;
+      if (input == HoangEnum.Status.NotActive) return Resources.StatusName.NotActiveName;
+      if (input == HoangEnum.Status.DeActivation) return Resources.StatusName.DeActivationName;
     },
 
     /**
@@ -590,20 +593,25 @@ export default {
     async getPaging(filter){
       var me = this;
       this.isShowLoading = true;
-      await axios
-        .get(
-          `https://localhost:44328/api/v1/Users/filter?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&filter=${filter}`
-        )
-        .then(function (res) {
-          me.users = res.data.data;
-          me.totalRecord = res.data.totalRecord;
-          me.recordStart = res.data.recordStart;
-          me.recordEnd = res.data.recordEnd;
-          setTimeout(()=>me.isShowLoading = false, 1000);
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+      // await axios
+      //   .get(
+      //     `https://localhost:44328/api/v1/Users/filter?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&filter=${filter}`
+      //   )
+      //   .then(function (res) {
+      //     me.users = res.data.data;
+      //     me.totalRecord = res.data.totalRecord;
+      //     me.recordStart = res.data.recordStart;
+      //     me.recordEnd = res.data.recordEnd;
+      //     setTimeout(()=>me.isShowLoading = false, 1000);
+      //   })
+      //   .catch(function (res) {
+      //     console.log(res);
+      //   });
+      var pagingResponse = await getUserPaging.getUserPaging(me.pageIndex, me.pageSize, filter, me);
+      me.users = pagingResponse.users;
+      me.totalRecord = pagingResponse.totalRecord;
+      me.recordStart = pagingResponse.recordStart;
+      me.recordEnd = pagingResponse.recordEnd;
       },
 
        /**
@@ -692,18 +700,21 @@ export default {
     this.getPaging(this.keySearch);
 
     // lấy tên các vai trò từ database
-    await axios
-        .get(
-          `https://localhost:44328/api/v1/Roles`
-        )
-        .then(function (res) {
-          res.data.forEach(element => {
+    // await axios
+    //     .get(
+    //       `https://localhost:44328/api/v1/Roles`
+    //     )
+    //     .then(function (res) {
+    //       res.data.forEach(element => {
+    //         me.roleNameFilter.push(element.roleName);
+    //       });
+    //     })
+    //     .catch(function (res) {
+    //       console.log(res);
+    //     });
+    (await getRole.getRoleList()).forEach(element => {
             me.roleNameFilter.push(element.roleName);
-          });
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+      });
     this.roleNameFilter.unshift("Tất cả");
   },
 };

@@ -74,26 +74,12 @@
                   <span class="icon-square-uncheck checkmark" @click="change(item.index)" :class="{'icon-square-check': this.checks[item.index] == true}"></span> 
                   <span class="con-slot-label">
                     <div class="label-role-checkbox" :title="item.roleName">
-                      <!-- Quản trị ứng dụng quy tình -->{{item.roleName}}
+                      {{item.roleName}}
                     </div>
                   </span>
                 </div>
               </div>
             </div>
-
-            <!-- <div class="ms-col ms-role-checkbox">
-              <div class="flex items-center">
-                <div class="ms-checkbox-container ms-checkbox">
-                  <input type="checkbox" class="ms-checkbox--input" />
-                  <span class="icon-square-uncheck checkmark" @click="change(1)" :class="{'icon-square-check': this.checks[1] == true}"></span> 
-                  <span class="con-slot-label">
-                    <div class="label-role-checkbox">
-                      Quản trị ứng dụng quy tình
-                    </div>
-                  </span>
-                </div>
-              </div>
-            </div> -->
 
           </div>
         </div>
@@ -119,8 +105,11 @@
 </template>
 <script>
 import axios from 'axios';
+import Enum from '@/js/enums.js'
 import ProfileImage from './ProfileImage.vue';
-
+import getRole from '@/js/services/role/getRole.js';
+import deleteUser from '@/js/services/user/deleteUser.js'
+import updateUserRole from '@/js/services/userRoleServices/updateUserRole.js'
 export default {
     name: "PopUp",
     props: {
@@ -152,12 +141,12 @@ export default {
     data() {
         return {
             user: {}, // thông tin người dùng
-            checks: [],
+            checks: [], // mảng ktra checkbox được chọn
             isEdit: false, // thực hiện sửa vai trò
             isDelete: false, // thực hiện xoá dữ liệu
             roles: [], // mảng vai trò
-            roleNames:[], 
-            test: [{}]
+            roleNames:[], // mảng tên vai trò
+
         };
     },
     methods: {
@@ -179,11 +168,11 @@ export default {
         change(index) {
             if (this.checks[index]){
               this.checks[index] = false;
-              this.roles[index].status = 2;
+              this.roles[index].status = Enum.UserRoleStatus.Delete;
             }
             else{
               this.checks[index] = true;
-              this.roles[index].status = 1;
+              this.roles[index].status = Enum.UserRoleStatus.Add;
             }
                 
         },
@@ -197,34 +186,43 @@ export default {
           var me = this;
 
           // thực hiện cập nhật vai trò
+
           if(this.isEdit){
-            await axios
-            .put(
-              `https://localhost:44328/api/v1/UserRoles/putAll/`, me.roles
-            )
-            .then(function (res) {
-              console.log(res);
-              me.$emit("reLoad");
-              me.$emit("closePopUp", true);
-            })
-            .catch(function (res) {
-              console.log(res);
-            });
+            
+            var isValid = this.checks.includes(true);
+            
+            // await axios
+            // .put(
+            //   `https://localhost:44328/api/v1/UserRoles/putAll/`, me.roles
+            // )
+            // .then(function (res) {
+            //   console.log(res);
+            //   me.$emit("reLoad");
+            //   me.$emit("closePopUp", true);
+            // })
+            // .catch(function (res) {
+            //   console.log(res);
+            // });
+            if(isValid)
+              await updateUserRole.updateUserRole(me.roles, me);
+            else
+              alert("Không phần tử được chọn");
           }
 
           if(this.isDelete){
-            await axios
-            .delete(
-              `https://localhost:44328/api/v1/Users/${me.user.userID}`, 
-            )
-            .then(function (res) {
-              console.log(res);
-              me.$emit("reLoad");
-              me.$emit("closePopUp", true);
-            })
-            .catch(function (res) {
-              console.log(res);
-            });
+            // await axios
+            // .delete(
+            //   `https://localhost:44328/api/v1/Users/${me.user.userID}`, 
+            // )
+            // .then(function (res) {
+            //   console.log(res);
+            //   me.$emit("reLoad");
+            //   me.$emit("closePopUp", true);
+            // })
+            // .catch(function (res) {
+            //   console.log(res);
+            // });
+            await deleteUser.deleteUser(me.user.userID, me);
           }
           
         }
@@ -236,25 +234,26 @@ export default {
       if(this.user.roleName)
         this.roleNames = this.user.roleName.split(", ");
       // hiển thị nội dung cập nhật hoặc sửa
-      if (this.editMode == 0)
+      if (this.editMode == Enum.EditMode.Edit)
           this.isEdit = true;
-      if (this.editMode == 1)
+      if (this.editMode == Enum.EditMode.Delete)
           this.isDelete = true;
       
       // lấy dữ liệu từ bảng role khi thực hiện sửa vai trò
       if(this.isEdit){
-        await axios
-        .get(
-          `https://localhost:44328/api/v1/Roles`
-        )
-        .then(function (res) {
-          me.roles = res.data;
-          // console.log(me.roles);
+        // await axios
+        // .get(
+        //   `https://localhost:44328/api/v1/Roles`
+        // )
+        // .then(function (res) {
+        //   me.roles = res.data;
+        //   // console.log(me.roles);
          
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+        // })
+        // .catch(function (res) {
+        //   console.log(res);
+        // });
+        this.roles = await getRole.getRoleList();
       }
 
       // thêm thuộc tính cho đối tượng trong mảng
@@ -262,7 +261,7 @@ export default {
       {
         me.roles[i].index = i;
         me.roles[i].userID = me.user.userID;
-        me.roles[i].status = 3;
+        me.roles[i].status = Enum.UserRoleStatus.NoAction;
 
         if(me.roleNames.includes(me.roles[i].roleName))
           me.checks.push(true);

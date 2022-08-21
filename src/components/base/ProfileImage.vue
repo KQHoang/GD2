@@ -55,7 +55,7 @@
 </style>
 
 <script>
-
+import Resources from '@/js/resources';
 export default {
     props:{
 
@@ -99,34 +99,34 @@ export default {
         this.splitSpace();
         const charLast = this.userCode.slice(-1);
         switch (charLast) {
-            case "9":
+            case Resources.ColorProfileImage.Color9:
                 this.color = "color9";
                 break;
-            case "8": 
+            case Resources.ColorProfileImage.Color8: 
                 this.color = "color8";
                 break;
-            case "7":
+            case Resources.ColorProfileImage.Color7:
                 this.color = "color7";
                 break;
-            case "6":
+            case Resources.ColorProfileImage.Color6:
                 this.color = "color6";
                 break;
-            case "5":
+            case Resources.ColorProfileImage.Color5:
                 this.color = "color5";
                 break;
-            case "4":
+            case Resources.ColorProfileImage.Color4:
                 this.color = "color4";
                 break;
-            case "3":
+            case Resources.ColorProfileImage.Color3:
                 this.color = "color3";
                 break;
-            case "2":
+            case Resources.ColorProfileImage.Color2:
                 this.color = "color2";
                 break;
-            case "1":
+            case Resources.ColorProfileImage.Color1:
                 this.color = "color1";
                 break;
-            case "0":
+            case Resources.ColorProfileImage.Color0:
                 this.color = "color0";
                 break;
             default:

@@ -245,6 +245,7 @@
 </template>
 
 <script>
+import Resources from '@/js/resources';
     export default {
         name: "CustomizeTable",
 
@@ -257,7 +258,8 @@
         data(){
             return {
               keySearch: "",
-              arrayName: ["Mã nhân viên", "Họ và tên", "Phòng ban", "Vị trí công việc", "Email", "Vai trò", "Trạng thái"],
+              arrayName: Resources.ColumnName,
+              // arrayName: ["Mã nhân viên", "Họ và tên", "Phòng ban", "Vị trí công việc", "Email", "Vai trò", "Trạng thái"],
               arrayShow: [true, true, true, true, true, true, true],
               checkboxs: [false, false, false, false, false], // mảng danh sách trạng thái các input
             }

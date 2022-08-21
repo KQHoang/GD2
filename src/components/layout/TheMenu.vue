@@ -4,8 +4,6 @@
             <div class="icon-tab icon-employee"></div>
             <div class="name-tab">
                 <router-link to="/setting/user">Người dùng</router-link>
-                
-               
             </div>
         </div>
 
@@ -25,6 +23,7 @@
         </div>
     </div>
 
+     <!-- bảng người dùng -->
     <GridUser/>
 </template>
 
