@@ -106,7 +106,7 @@ thead {
     z-index: 100;
 }
 
-table th:not(:first-child)::before {
+table th:not(:first-child, :last-child)::before {
     content: "";
     position: absolute;
     top: 30%;

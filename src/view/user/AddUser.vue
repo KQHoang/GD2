@@ -33,187 +33,115 @@
             border: none;
           " -->
           <div class="tb-datagrid-header tb-datagrid-nowrap grid-container grid-container-add">
-           
-            <DxDataGrid
-              ref="dataGridAddUser"
-              id="gridContainer1"
-              :key-expr="ID"
-              :data-source="userList"
-              column-resizing-mode="widget"
-              :allow-column-reordering="true"
-              :allow-column-resizing="true"
-              :column-auto-width="true"
-              :show-borders="true"
-              :show-column-lines="false"
-              :show-row-lines="true"
-              :hover-state-enabled="true"
-              :onRowClick="showUserDetail"
-              :paging="{enabled: false}"
-            >
-              <DxColumn caption="STT" :width="60" cell-template="indexColumn" 
-              header-cell-template="headerTableAddUser"
-              />
+            <table class="table-add-newuser" style="width: 100%; overflow: auto;">
+              <thead>
+                <th style="min-width: 60px; width: 60px">STT</th>
+                <th style="min-width: 230px; width: 230px" class="text-align-left">Mã nhân viên</th>
+                <th style="min-width: 230px; width: 230px" class="text-align-left">Họ tên</th>
+                <th style="min-width: 230px; width: 230px" class="text-align-left">Phòng ban</th>
+                <th style="min-width: 230px; width: 230px" class="text-align-left">Vị trí công việc</th>
+                <th style="min-width: 230px; width: 230px" class="text-align-left">Email</th>
+                <th style="min-width: 230px; width: 230px" class="text-align-left" >Vai trò</th>
+                <th style="min-width: 230px; width: 230px" class="text-align-left">Trạng thái</th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in userList" :key="index">
+                  <td class="text-align">{{index+1}}</td>
+                  <td >
+                    <div :class="{'invalid': this.errorRequireds[index].userCode == true}">
+                      <input type="text" class="w-full" v-model="userList[index].userCode" @blur="blurColor(userList[index].fullName, index, 'userCode')"/>
+                      <div class="tooltip-required">Mã người dùng trống</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div :class="{'invalid': this.errorRequireds[index].fullName == true}">
+                      <input type="text" class="w-full" v-model="userList[index].fullName" @blur="blurColor(userList[index].fullName, index, 'fullName')"/>
+                      <div class="tooltip-required">Mã người dùng trống</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div :class="{'invalid': this.errorRequireds[index].departmentID == true}">
+                      <DxSelectBox 
+                        :data-source="departments"
+                        display-expr="departmentName"
+                        value-expr="departmentID"
+                        placeholder="Chọn vai trò"
+                        class="ms-select-box select-box-add w-full"
+                        v-model="userList[index].departmentID"
+                        @closed="valueChangedBlur(userList[index].departmentID, index, 'departmentID')"
+                        @value-changed="valueChangedBlur(userList[index].departmentID, index, 'departmentID')"
+                      />
+                      <div class="tooltip-required">Phòng ban trống</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div :class="{'invalid': this.errorRequireds[index].positionID == true}">
+                        <DxSelectBox 
+                          :data-source="positions"
+                          display-expr="positionName"
+                          value-expr="positionID"
+                          placeholder="Chọn vai trò"
+                          class="ms-select-box select-box-add w-full"
+                          v-model="userList[index].positionID"
+                          @closed="valueChangedBlur(userList[index].positionID, index, 'positionID')"
+                          @value-changed="valueChangedBlur(userList[index].positionID, index, 'positionID')"
+                        />
+                      <div class="tooltip-required">Vị trí công việc trống</div>
+                    </div>
+                  </td>
+                  <td >
+                    <div :class="{'invalid': this.errorRequireds[index].email == true}">
+                      <input type="text" class="w-full" v-model="userList[index].email" @blur="blurColor(userList[index].fullName, index, 'email')"/>
+                      <div class="tooltip-required" style="width: 80px;">Email trống</div>
+                    </div>
+                  </td>
+                  <td >
+                    <div :class="{'invalid': this.errorRequireds[index].role == true}">
+                      <DxTagBox
+                        :data-source="roles"
+                        display-expr="roleName"
+                        value-expr="roleID"
+                        class="ms-select-box w-full"
+                        v-model="userList[index].roleID"
+                        @closed="valueChangedBlur(userList[index].roleID, index, 'roleID')"
+                        @value-changed="valueChangedBlur(userList[index].roleID, index, 'roleID')"
+                      />
+                      <div class="tooltip-required" style="width: 90px;">Vai trò trống</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div :class="{'invalid': this.errorRequireds[index].status == true}">
+                      <DxSelectBox 
+                        :data-source="status"
+                        display-expr="statusName"
+                        value-expr="ID"
+                        placeholder="Chọn vai trò"
+                        class="ms-select-box select-box-add w-full"
+                        v-model="userList[index].status"
+                        @closed="valueChangedBlur(userList[index].status, index, 'status')"
+                        @value-changed="valueChangedBlur(userList[index].status, index, 'status')"
+                      />
+                      <div class="tooltip-required" style="width: 105px;">trạng thái trống</div>
+                    </div>
+                  </td>
 
-              <!-- phần header -->
-              <template #headerTableAddUser="{data}">
-                  <div  class="p-lr-16" :class="{'label-header-dxgrid': data.columnIndex != 0}">
-                  <!-- style="padding: 0 16px;" -->
-                    {{data.column.caption}} 
-                  </div>
-              </template>
-
-              <template #indexColumn="{ data }">
-                <div :title="data.rowIndex + 1" class="wrap-text">
-                  <div class="nomal line-clamp-2 d-flex justify-center text-align" >
-                    <!-- style="text-align: center" -->
-                    {{ data.rowIndex + 1 }}
-                  </div>
-                </div>
-              </template>
-              <!-- data-field="UserCode" -->
-              <DxColumn
-                :width="230"
-                :min-width="230"
-                data-field="userCode"
-                caption="Mã nhân viên"
-                cell-template="userCodeColumn"
-                header-cell-template="headerTableAddUser"
-              />
-              <template #userCodeColumn="{ data }">
-                 <DxTextBox v-model="userList[data.rowIndex].userCode"/>
-              </template>
-
-              <!-- Tên người dùng -->
-              <DxColumn
-                :width="230"
-                :min-width="230"
-                data-field="fullName"
-                caption="Họ và tên"
-                cell-template="userNameColumn"
-                header-cell-template="headerTableAddUser"
-              />
-              <template #userNameColumn="{ data }">
-                <DxTextBox v-model="userList[data.rowIndex].fullName"/>
-              </template>
-
-              <!-- Phòng ban -->
-              <DxColumn
-                :width="230"
-                :min-width="230"
-                data-field="departmentID"
-                caption="Phòng ban"
-                cell-template="userDepartmentColumn"
-                header-cell-template="headerTableAddUser"
-              />
-              <template #userDepartmentColumn="{ data }">
-                <DxSelectBox 
-                  :data-source="departments"
-                  display-expr="departmentName"
-                  value-expr="departmentID"
-                  placeholder="Chọn vai trò"
-                  class="ms-select-box select-box-add w-full"
-                  v-model="userList[data.rowIndex].departmentID"
-                  
-                />
-              </template>
-
-              <!-- Vị trí công việc -->
-              <DxColumn
-                :width="230"
-                :min-width="230"
-                data-field="positionID"
-                caption="Vị trí công việc"
-                cell-template="userPositionColumn"
-                header-cell-template="headerTableAddUser"
-              />
-              <template #userPositionColumn="{ data }">
-                <DxSelectBox 
-                  :data-source="positions"
-                  display-expr="positionName"
-                  value-expr="positionID"
-                  placeholder="Chọn vai trò"
-                  class="ms-select-box select-box-add w-full"
-                  v-model="userList[data.rowIndex].positionID"
-                  
-                />
-              </template>
-
-              <!-- Email -->
-              <DxColumn
-                :width="230"
-                :min-width="230"
-                data-field="email"
-                caption="Email"
-                cell-template="userEmailColumn"
-                header-cell-template="headerTableAddUser"
-              />
-              <template #userEmailColumn="{ data }">
-               <DxTextBox v-model="userList[data.rowIndex].email"/>
-              </template>
-
-              <!-- Vai trò -->
-               <DxColumn
-                :width="230"
-                :min-width="230"
-                data-field="roleID"
-                caption="Vai trò"
-                cell-template="userRoleColumn"
-                header-cell-template="headerTableAddUser"
-              />
-              <template #userRoleColumn="{ data }">
-                
-                <DxTagBox
-                  :data-source="roles"
-                  display-expr="roleName"
-                  value-expr="roleID"
-                  class="ms-select-box w-full"
-                  v-model="userList[data.rowIndex].roleID"
-                  
-                />
-              </template>
-
-              <!-- Trạng thái -->
-               <DxColumn
-                :width="230"
-                :min-width="230"
-                data-field="status"
-                caption="Trạng thái"
-                cell-template="userStatusColumn"
-                header-cell-template="headerTableAddUser"
-              />
-              <template #userStatusColumn="{ data }">
-                <DxSelectBox 
-                  :data-source="status"
-                  display-expr="statusName"
-                  value-expr="ID"
-                  placeholder="Chọn vai trò"
-                  class="ms-select-box select-box-add w-full"
-                  v-model="userList[data.rowIndex].status"
-                  
-                />
-              </template>
-
-              <DxColumn
-                    :min-width="68"
-                    :max-width="68"
-                    :width="68"
-                    cell-template="dropDownBoxEditor"
-                  />
-              <template #dropDownBoxEditor="{ data }">
+                  <td>
                     <div class="flex m-8 height-50" >
                       <!-- style="height: 50px" -->
                       <div class="style-button">
                         <div class="button-comand-wrap btn-more">
                           <div
                             class="icon-delete-custom icon-hidden"
-                            @click="deleteUser(data.rowIndex)"
+                            @click="deleteUser(index)"
                           ></div>
                         </div>
                       </div>
                     </div>
-                  </template>
-
-            </DxDataGrid>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <MsButton
           class="m-r-12 p-d-16"
@@ -259,7 +187,8 @@ export default {
         roles: [], // mảng vai trò
         newUserCode: "", // mã nhân viên mới
         status: [{ID: 0, statusName:"Đang hoạt động"}, {ID: 1, statusName:"Chờ xác nhận"},
-                {ID: 2, statusName:"Chưa kích hoạt"}, {ID: 3, statusName:"Ngừng kích hoạt"} ]
+                {ID: 2, statusName:"Chưa kích hoạt"}, {ID: 3, statusName:"Ngừng kích hoạt"} ],
+        errorRequireds:[], // mảng validate dữ liệu
       }
     },
 
@@ -294,7 +223,13 @@ export default {
 
           // Thêm người dùng vào trong mảng
           this.userList.push(newUser);
-          this.$refs.dataGridAddUser.instance.refresh(true);
+
+          var newValidate = {
+            userCode: false, fullName: false, departmentID: false, positionID: false, role: false, email: false, status: false
+          };
+
+          this.errorRequireds.push(newValidate);
+          // this.$refs.dataGridAddUser.instance.refresh(true);
         }, 
 
         /**
@@ -303,11 +238,126 @@ export default {
          * Ngày tạo: 16/8/2022
          */
         deleteUser(index){
-          // debugger
           this.userList.splice(index, 1);
-          // setTimeout(() => ;
-          this.$refs.dataGridAddUser.instance.refresh(false);
-          // console.log(index);
+        },
+        
+         /**
+         * ẩn hoặc hiện viền đỏ khi validate
+         * Người tạo: Khuất Quang Hoàng
+         * Ngày tạo: 16/8/2022
+         */
+        blurColor(data, index, propertyName){
+          // debugger
+          if(data == ""){
+            if(propertyName == "userCode")
+              this.errorRequireds[index].userCode = true;
+            if(propertyName == "fullName")
+              this.errorRequireds[index].fullName = true;
+            if(propertyName == "email")
+              this.errorRequireds[index].email = true;
+          }
+          else
+          {
+            if(propertyName == "userCode")
+                this.errorRequireds[index].userCode = false;
+            if(propertyName == "fullName")
+              this.errorRequireds[index].fullName = false;
+            if(propertyName == "email")
+                this.errorRequireds[index].email = false;
+          }
+
+        },
+
+        /**
+         * Thay đổi dữ liệu thẻ select
+         * Người tạo: Khuất Quang Hoàng
+         * Ngày tạo: 20/8/2022
+         */
+        valueChangedBlur(data, index, propertyName){
+
+          debugger
+          if(propertyName == 'departmentID'){
+            if(data == "")
+              this.errorRequireds[index].departmentID = true;
+            else
+              this.errorRequireds[index].departmentID = false;
+          }
+
+          if(propertyName == 'positionID'){
+            if(data == "")
+              this.errorRequireds[index].positionID = true;
+            else
+              this.errorRequireds[index].positionID = false;
+          }
+
+          if(propertyName == 'roleID'){
+            if(data.length == 0)
+              this.errorRequireds[index].role = true;
+            else
+              this.errorRequireds[index].role = false;
+          }
+
+          if(propertyName == 'status'){
+            if(data == null)
+              this.errorRequireds[index].status = true;
+            else
+              this.errorRequireds[index].status = false;
+          }
+        },
+
+        /**
+         * Validate dữ liệu
+         * Người tạo: Khuất Quang Hoàng
+         * Ngày tạo: 20/8/2022
+         */
+         validate(){
+          for(var i = 0; i < this.errorRequireds.length; i++)
+          {
+            if(this.userList[i].userCode == "")
+            {
+              this.errorRequireds[i].userCode = true;
+            }
+            else{
+              this.errorRequireds[i].userCode = false;
+            }
+
+            if(this.userList[i].fullName == ""){
+              this.errorRequireds[i].fullName = true;
+            }
+            else
+              this.errorRequireds[i].fullName = false;
+
+
+            if(this.userList[i].departmentID == ""){
+              this.errorRequireds[i].departmentID = true;
+            }
+            else
+              this.errorRequireds[i].departmentID = false;
+
+            if(this.userList[i].positionID == ""){
+              this.errorRequireds[i].positionID = true;
+            }
+            else
+              this.errorRequireds[i].positionID = false;
+
+            if(this.userList[i].email == ""){
+              this.errorRequireds[i].email = true;
+            }
+            else
+              this.errorRequireds[i].email = false;
+
+            if(this.userList[i].roleID.length == 0){
+              this.errorRequireds[i].role = true;
+            }
+            else
+              this.errorRequireds[i].role = false;
+
+            if(this.userList[i].status == null){
+              this.errorRequireds[i].status = true;
+            }
+            else
+              this.errorRequireds[i].status = false;
+          }   
         },
 
         /**
@@ -317,19 +367,34 @@ export default {
          */
         async btnSubmit(){
           var me = this;
-          // console.log(this.userList);
-          await axios
-          .post(
-            ` https://localhost:44328/api/v1/Users/postAll`, me.userList
-          )
-          .then(function (res) {
-            console.log(res);
-            me.$emit("reLoad");
-            me.$emit("closePopUp", false);
-          })
-          .catch(function (res) {
-            console.log(res);
+          // Validate dữ liệu
+          this.validate();
+
+          var isValid = true;
+          this.errorRequireds.forEach(element => {
+            for(var property in element){
+              if(element[property] == true)
+                {
+                  isValid = false;
+                  return;
+                }
+            }
           });
+
+          if(isValid){
+            await axios
+            .post(
+              ` https://localhost:44328/api/v1/Users/postAll`, me.userList
+            )
+            .then(function (res) {
+              // console.log(res);
+              me.$emit("reLoad");
+              me.$emit("closePopUp", false);
+            })
+            .catch(function (res) {
+              console.log(res);
+            });
+          }
 
         }
 
@@ -345,6 +410,11 @@ export default {
       newUser.email = "";
       newUser.status = null;
 
+      var newValidate = {
+        userCode: false, fullName: false, departmentID: false, positionID: false, role: false, email: false, status: false
+      };
+
+      this.errorRequireds.push(newValidate);
       // lấy mã nhân viên mới
         await axios
         .get(
@@ -401,3 +471,104 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+
+.grid-container-add{
+  overflow: auto !important;
+  max-height: 500px;
+}
+
+thead{
+  background: #f3f8ff;
+}
+
+thead th:not(:first-child, :last-child)::after{
+  content: " *";
+  color: red;
+  right: 0;
+}
+
+tr td{
+  height: 60px;
+  padding: 6px;
+}
+
+td input{
+  border: 1px solid #e7e8e9;
+  background: #fff;
+  border-radius: 4px;
+  height: 36px;
+  padding: 7px 8px 9px;
+}
+
+td input:focus-visible{
+  border-color: var(--input-hover-border-color);
+  outline: none;
+}
+
+td input:hover{
+  border-color: var(--input-hover-border-color);
+  outline: none;
+}
+
+.invalid input:hover{
+  border-color: red;
+  outline: none;
+}
+
+.invalid input:focus{
+  border-color: red;
+  outline: none;
+}
+
+tbody>tr:hover td{
+  background: #dbf4ff;
+}
+
+tbody>tr:hover .icon-hidden{
+  display: block;
+}
+
+tbody td:last-child{
+  position: sticky;
+  right: 0;
+}
+
+.tooltip-required{
+  display: none;
+  position: absolute;
+  background-color: black;
+  color: #fff;
+  width: fit-content;
+  padding: 4px;
+  top: 25px;
+}
+
+.dx-template-wrapper{
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.invalid .dx-texteditor.dx-editor-outlined{
+  border-color: red !important;
+}
+
+.invalid input{
+  border-color: red;
+}
+.invalid:hover  .tooltip-required{
+    display: block;
+}
+
+.text-align-left{
+  text-align: left;
+}
+
+.invalid{
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+</style>

@@ -249,7 +249,7 @@ export default {
         )
         .then(function (res) {
           me.roles = res.data;
-          console.log(me.roles);
+          // console.log(me.roles);
          
         })
         .catch(function (res) {

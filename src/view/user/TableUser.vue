@@ -518,7 +518,7 @@ export default {
       this.userInfo = selectRowsData.data;
       if(this.roleNames != null)
         this.roleNames = this.userInfo.roleName.split(", ");
-      console.log(this.userInfo);
+      // console.log(this.userInfo);
     },
 
     /**
@@ -697,7 +697,6 @@ export default {
           `https://localhost:44328/api/v1/Roles`
         )
         .then(function (res) {
-          console.log(res);
           res.data.forEach(element => {
             me.roleNameFilter.push(element.roleName);
           });
