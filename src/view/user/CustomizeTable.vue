@@ -257,10 +257,9 @@ import Resources from '@/js/resources';
 
         data(){
             return {
-              keySearch: "",
-              arrayName: Resources.ColumnName,
-              // arrayName: ["Mã nhân viên", "Họ và tên", "Phòng ban", "Vị trí công việc", "Email", "Vai trò", "Trạng thái"],
-              arrayShow: [true, true, true, true, true, true, true],
+              keySearch: "", // key tìm kiếm tên cột
+              arrayName: Resources.ColumnName, // mảng chứa tên các cột trong bảng dữ liệu
+              arrayShow: [true, true, true, true, true, true, true], // ẩn hiện cột
               checkboxs: [false, false, false, false, false], // mảng danh sách trạng thái các input
             }
         }, 
@@ -314,6 +313,11 @@ import Resources from '@/js/resources';
               this.checkboxs[i] = true;
           },
 
+          /**
+           * Tìm kiếm tên cột
+           * Khuất Quang Hoàng
+           * Ngày tạo: 12/8/2022
+           */
           searchCustomName(){
             if(this.keySearch){
             for(var i = 0; i< this.arrayName.length; i++)
@@ -323,15 +327,21 @@ import Resources from '@/js/resources';
               }
             }
             else
-              this.arrayShow = [true, true, true, true, true, true, true];           
+              this.arrayShow = [true, true, true, true, true, true, true];                      
           },
 
+          /**
+           * Thực hiện tìm kiếm tên cột
+           * Khuất Quang Hoàng
+           * Ngày tạo: 12/8/2022
+           */
           search(){
-            setTimeout(()=> this.searchCustomName(), 1000);
+            try {
+              setTimeout(()=> this.searchCustomName(), 1000);
+            } catch (error) {
+              console.log("Có lỗi xảy ra khi thực hiện tìm kiếm tên cột");
+            }
           }
-          
-
-            
         },
 
         created() {

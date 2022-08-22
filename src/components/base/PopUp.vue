@@ -166,6 +166,7 @@ export default {
          * Ngày tạo: (10/8/2022)
          */
         change(index) {
+          try {
             if (this.checks[index]){
               this.checks[index] = false;
               this.roles[index].status = Enum.UserRoleStatus.Delete;
@@ -174,7 +175,9 @@ export default {
               this.checks[index] = true;
               this.roles[index].status = Enum.UserRoleStatus.Add;
             }
-                
+          } catch (error) {
+            console.log("Có lỗi xảy ra khi thay đổi vai trò.");
+          }
         },
 
         /**
@@ -183,93 +186,60 @@ export default {
          * Ngày tạo: (10/8/2022)
          */
        async btnYes() {
-          var me = this;
-
-          // thực hiện cập nhật vai trò
-
-          if(this.isEdit){
-            
-            var isValid = this.checks.includes(true);
-            
-            // await axios
-            // .put(
-            //   `https://localhost:44328/api/v1/UserRoles/putAll/`, me.roles
-            // )
-            // .then(function (res) {
-            //   console.log(res);
-            //   me.$emit("reLoad");
-            //   me.$emit("closePopUp", true);
-            // })
-            // .catch(function (res) {
-            //   console.log(res);
-            // });
-            if(isValid)
-              await updateUserRole.updateUserRole(me.roles, me);
-            else
-              alert("Không phần tử được chọn");
+          try {
+            var me = this;
+            // thực hiện cập nhật vai trò
+            if(this.isEdit){           
+              // validate xem vai trò có trống không
+              var isValid = this.checks.includes(true);
+              if(isValid)
+                await updateUserRole.updateUserRole(me.roles, me);
+              else
+                alert("Không phần tử được chọn");
+            }
+            if(this.isDelete){
+              // thực hiện xoá người dùng
+              await deleteUser.deleteUser(me.user.userID, me);
+            }
+          } catch (error) {
+            console.log("Có lỗi xảy ra.");
           }
-
-          if(this.isDelete){
-            // await axios
-            // .delete(
-            //   `https://localhost:44328/api/v1/Users/${me.user.userID}`, 
-            // )
-            // .then(function (res) {
-            //   console.log(res);
-            //   me.$emit("reLoad");
-            //   me.$emit("closePopUp", true);
-            // })
-            // .catch(function (res) {
-            //   console.log(res);
-            // });
-            await deleteUser.deleteUser(me.user.userID, me);
-          }
-          
         }
     },
       async created() {
-      var me = this;
-      this.user = JSON.parse(JSON.stringify(this.userInfo));
-
-      if(this.user.roleName)
-        this.roleNames = this.user.roleName.split(", ");
-      // hiển thị nội dung cập nhật hoặc sửa
-      if (this.editMode == Enum.EditMode.Edit)
-          this.isEdit = true;
-      if (this.editMode == Enum.EditMode.Delete)
-          this.isDelete = true;
-      
-      // lấy dữ liệu từ bảng role khi thực hiện sửa vai trò
-      if(this.isEdit){
-        // await axios
-        // .get(
-        //   `https://localhost:44328/api/v1/Roles`
-        // )
-        // .then(function (res) {
-        //   me.roles = res.data;
-        //   // console.log(me.roles);
-         
-        // })
-        // .catch(function (res) {
-        //   console.log(res);
-        // });
-        this.roles = await getRole.getRoleList();
-      }
-
-      // thêm thuộc tính cho đối tượng trong mảng
-      for(var i = 0; i< me.roles.length; i++)
-      {
-        me.roles[i].index = i;
-        me.roles[i].userID = me.user.userID;
-        me.roles[i].status = Enum.UserRoleStatus.NoAction;
-
-        if(me.roleNames.includes(me.roles[i].roleName))
-          me.checks.push(true);
-        else
-          me.checks.push(false);
-      } 
-      
-      
+        try {
+          var me = this;
+          this.user = JSON.parse(JSON.stringify(this.userInfo));
+    
+          // lấy mảng tên vai trò của người dùng
+          if(this.user.roleName)
+            this.roleNames = this.user.roleName.split(", ");
+          // hiển thị nội dung cập nhật hoặc sửa
+          if (this.editMode == Enum.EditMode.Edit)
+              this.isEdit = true;
+          if (this.editMode == Enum.EditMode.Delete)
+              this.isDelete = true;
+          
+          // lấy dữ liệu từ bảng role khi thực hiện sửa vai trò
+          if(this.isEdit){
+            this.roles = await getRole.getRoleList();
+          }
+    
+          // thêm thuộc tính cho đối tượng trong mảng
+          for(var i = 0; i< me.roles.length; i++)
+          {
+            me.roles[i].index = i;
+            me.roles[i].userID = me.user.userID;
+            me.roles[i].status = Enum.UserRoleStatus.NoAction;
+    
+            if(me.roleNames.includes(me.roles[i].roleName))
+              me.checks.push(true);
+            else
+              me.checks.push(false);
+          }  
+        } catch (error) {
+          console.log("Có lỗi xảy ra khi tải dữ liệu.");
+        }
     },
     components: { ProfileImage }
 };

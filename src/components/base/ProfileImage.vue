@@ -88,11 +88,15 @@ export default {
          * Ngày tạo: 11/8/2022 
          */
         splitSpace(){
-            if(this.fullNameAvatar){
+            try {
+                if(this.fullNameAvatar){
                 const s = this.fullNameAvatar;
-            this.arrayName = s.split(" ");
-            this.name = this.arrayName[this.arrayName.length-2].charAt(0) + this.arrayName[this.arrayName.length-1].charAt(0);
-            }   
+                this.arrayName = s.split(" ");
+                this.name = this.arrayName[this.arrayName.length-2].charAt(0) + this.arrayName[this.arrayName.length-1].charAt(0);
+            } 
+            } catch (error) {
+                console.log("Có lỗi xảy ra khi thực hiện lấy tên người dùng");
+            }             
         }
     },
     created(){

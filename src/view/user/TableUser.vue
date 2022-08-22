@@ -517,11 +517,14 @@ export default {
      * Khuất Quang Hoàng (2/8/2022)
      */
     showUserDetail(selectRowsData) {
-      this.isShowDetail = true;
-      this.userInfo = selectRowsData.data;
-      if(this.roleNames != null)
-        this.roleNames = this.userInfo.roleName.split(", ");
-      // console.log(this.userInfo);
+      try {
+        this.isShowDetail = true;
+        this.userInfo = selectRowsData.data;
+        if(this.roleNames != null)
+          this.roleNames = this.userInfo.roleName.split(", ");
+      } catch (error) {
+        console.log("Có lỗi khi tải dữ liệu");  
+      }
     },
 
     /**
@@ -537,10 +540,14 @@ export default {
      * Khuất Quang Hoàng (10/8/2022)
      */
     convertStatus(input) {
-      if (input == HoangEnum.Status.Working) return Resources.StatusName.WorkingName;
-      if (input == HoangEnum.Status.WConfirm) return Resources.StatusName.WConfirmName;
-      if (input == HoangEnum.Status.NotActive) return Resources.StatusName.NotActiveName;
-      if (input == HoangEnum.Status.DeActivation) return Resources.StatusName.DeActivationName;
+      try {
+        if (input == HoangEnum.Status.Working) return Resources.StatusName.WorkingName;
+        if (input == HoangEnum.Status.WConfirm) return Resources.StatusName.WConfirmName;
+        if (input == HoangEnum.Status.NotActive) return Resources.StatusName.NotActiveName;
+        if (input == HoangEnum.Status.DeActivation) return Resources.StatusName.DeActivationName;
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi chuyển đổi trạng thái người dùng");
+      }
     },
 
     /**
@@ -581,8 +588,12 @@ export default {
      * Ngày tạo: (10/8/2022)
      */
     getPageSize(pageSize){
-      this.pageSize = pageSize;
-      this.getPaging(this.keySearch);
+      try {
+        this.pageSize = pageSize;
+        this.getPaging(this.keySearch);
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi thực hiện phân trang");
+      }
     },
 
      /**
@@ -593,20 +604,7 @@ export default {
     async getPaging(filter){
       var me = this;
       this.isShowLoading = true;
-      // await axios
-      //   .get(
-      //     `https://localhost:44328/api/v1/Users/filter?pageIndex=${this.pageIndex}&pageSize=${this.pageSize}&filter=${filter}`
-      //   )
-      //   .then(function (res) {
-      //     me.users = res.data.data;
-      //     me.totalRecord = res.data.totalRecord;
-      //     me.recordStart = res.data.recordStart;
-      //     me.recordEnd = res.data.recordEnd;
-      //     setTimeout(()=>me.isShowLoading = false, 1000);
-      //   })
-      //   .catch(function (res) {
-      //     console.log(res);
-      //   });
+      // Thực hiện phân trang
       var pagingResponse = await getUserPaging.getUserPaging(me.pageIndex, me.pageSize, filter, me);
       me.users = pagingResponse.users;
       me.totalRecord = pagingResponse.totalRecord;
@@ -620,10 +618,14 @@ export default {
      * Ngày tạo: (10/8/2022)
      */
     nextPage(){
-      if(this.recordEnd < this.totalRecord)
-      {
-        this.pageIndex ++;
-        this.getPaging(this.keySearch);  
+      try {
+        if(this.recordEnd < this.totalRecord)
+        {
+          this.pageIndex ++;
+          this.getPaging(this.keySearch);  
+        }
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi thực hiện chuyển trang");  
       }
     },
 
@@ -633,10 +635,14 @@ export default {
      * Ngày tạo: (10/8/2022)
      */
     prePage(){
-      if(this.recordStart > 1)
-      {
-        this.pageIndex --;
-        this.getPaging(this.keySearch);  
+      try {
+        if(this.recordStart > 1)
+        {
+          this.pageIndex --;
+          this.getPaging(this.keySearch);  
+        }
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi thực hiện phân trang dữ liệu.");
       }
     },
 
@@ -667,7 +673,11 @@ export default {
      * Ngày tạo: (11/8/2022)
      */
     updateData(){
-      this.getPaging(this.keySearch);
+      try {
+        this.getPaging(this.keySearch);
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi cập nhật lại dữ liệu.");
+      }
     }, 
 
     /**
@@ -676,8 +686,12 @@ export default {
      * Ngày tạo: (17/8/2022)
      */
     searchUser(){
-      this.pageIndex = 1;
-      setTimeout(() => this.getPaging(this.keySearch), 500);
+      try {
+        this.pageIndex = 1;
+        setTimeout(() => this.getPaging(this.keySearch), 500);
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi thực hiện tìm kiếm.");
+      }
     }, 
 
     /**
@@ -686,36 +700,31 @@ export default {
      * Ngày tạo: (17/8/2022)
      */
     filterUserByRole(){
-      if(this.roleFilter != "Tất cả")
+      try {
+        if(this.roleFilter != "Tất cả")
         this.getPaging(this.roleFilter);
-      else
-        this.getPaging(this.keySearch);
+        else
+          this.getPaging(this.keySearch);
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi thực hiện lọc vai trò.");  
+      }
     }
   },
 
   async created() {
-    var me = this;
+    try {
+      var me = this;
+      // lấy dữ liệu có phân trang
+      this.getPaging(this.keySearch);
 
-    // lấy dữ liệu có phân trang
-    this.getPaging(this.keySearch);
-
-    // lấy tên các vai trò từ database
-    // await axios
-    //     .get(
-    //       `https://localhost:44328/api/v1/Roles`
-    //     )
-    //     .then(function (res) {
-    //       res.data.forEach(element => {
-    //         me.roleNameFilter.push(element.roleName);
-    //       });
-    //     })
-    //     .catch(function (res) {
-    //       console.log(res);
-    //     });
-    (await getRole.getRoleList()).forEach(element => {
-            me.roleNameFilter.push(element.roleName);
-      });
-    this.roleNameFilter.unshift("Tất cả");
+      // lấy tên các vai trò từ database
+      (await getRole.getRoleList()).forEach(element => {
+              me.roleNameFilter.push(element.roleName);
+        });
+      this.roleNameFilter.unshift("Tất cả");
+    } catch (error) {
+      console.log("Có lỗi xảy ra khi lấy dữ liệu về.");
+    }
   },
 };
 </script>

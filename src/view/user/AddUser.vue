@@ -24,40 +24,34 @@
       <div class="ms-popup--content">
         <div class="content-table-add"
         >
-          <!-- style="
-            height: 100%;
-            width: 100%;
-            position: relative;
-            overflow: auto;
-            text-indent: 0;
-            border: none;
-          " -->
           <div class="tb-datagrid-header tb-datagrid-nowrap grid-container grid-container-add">
             <table class="table-add-newuser">
               <thead>
                 <th class="min-width-60">STT</th>
-                <th  class="text-align-left min-width-230">Mã nhân viên</th>
+                <th  class="text-align-left min-width-150">Mã nhân viên</th>
                 <th  class="text-align-left min-width-230">Họ tên</th>
                 <th  class="text-align-left min-width-230">Phòng ban</th>
                 <th  class="text-align-left min-width-230">Vị trí công việc</th>
                 <th  class="text-align-left min-width-230">Email</th>
-                <th  class="text-align-left min-width-230" >Vai trò</th>
+                <th  class="text-align-left min-width-230">Vai trò</th>
                 <th  class="text-align-left min-width-230">Trạng thái</th>
-                <th></th>
+                <th :class="{'disable-icon': this.hideIconDelete()}"></th>
               </thead>
               <tbody>
                 <tr v-for="(row, index) in userList" :key="index">
                   <td class="text-align">{{index+1}}</td>
                   <td >
                     <div :class="{'invalid': this.errorRequireds[index].userCode == true}">
-                      <input type="text" class="w-full" v-model="userList[index].userCode" @blur="blurColor(userList[index].fullName, index, 'userCode')"/>
-                      <div class="tooltip-required">Mã người dùng trống</div>
+                      <input type="text" class="w-full" v-model="userList[index].userCode" 
+                      @blur="blurColor(userList[index].userCode, index, 'userCode')"
+                      ref="txtUserCode" maxlength="20"/>
+                      <div class="tooltip-required">{{errorValidateCode}}</div>
                     </div>
                   </td>
                   <td>
                     <div :class="{'invalid': this.errorRequireds[index].fullName == true}">
                       <input type="text" class="w-full" v-model="userList[index].fullName" @blur="blurColor(userList[index].fullName, index, 'fullName')"/>
-                      <div class="tooltip-required">Mã người dùng trống</div>
+                      <div class="tooltip-required">Họ tên trống</div>
                     </div>
                   </td>
                   <td>
@@ -66,7 +60,7 @@
                         :data-source="departments"
                         display-expr="departmentName"
                         value-expr="departmentID"
-                        placeholder="Chọn vai trò"
+                        placeholder="Chọn phòng ban"
                         class="ms-select-box select-box-add w-full"
                         v-model="userList[index].departmentID"
                         @closed="valueChangedBlur(userList[index].departmentID, index, 'departmentID')"
@@ -81,7 +75,7 @@
                           :data-source="positions"
                           display-expr="positionName"
                           value-expr="positionID"
-                          placeholder="Chọn vai trò"
+                          placeholder="Chọn vị trí"
                           class="ms-select-box select-box-add w-full"
                           v-model="userList[index].positionID"
                           @closed="valueChangedBlur(userList[index].positionID, index, 'positionID')"
@@ -92,16 +86,20 @@
                   </td>
                   <td >
                     <div :class="{'invalid': this.errorRequireds[index].email == true}">
-                      <input type="text" class="w-full" v-model="userList[index].email" @blur="blurColor(userList[index].fullName, index, 'email')"/>
-                      <div class="tooltip-required width-80">Email trống</div>
+                      <input type="text" class="w-full" v-model="userList[index].email" @blur="blurColor(userList[index].email, index, 'email')"/>
+                      <div class="tooltip-required width-80">{{validateEmail}}</div>
                     </div>
                   </td>
-                  <td >
+                  <td class="max-width-230">
                     <div :class="{'invalid': this.errorRequireds[index].role == true}">
                       <DxTagBox
+                        :with="230"
+                        :max-width="230"
                         :data-source="roles"
                         display-expr="roleName"
+                        placeholder="Chọn vai trò"
                         value-expr="roleID"
+                        :multiline="false"
                         class="ms-select-box w-full"
                         v-model="userList[index].roleID"
                         @closed="valueChangedBlur(userList[index].roleID, index, 'roleID')"
@@ -116,19 +114,18 @@
                         :data-source="status"
                         display-expr="statusName"
                         value-expr="ID"
-                        placeholder="Chọn vai trò"
+                        placeholder="Chọn trạng thái"
                         class="ms-select-box select-box-add w-full"
                         v-model="userList[index].status"
                         @closed="valueChangedBlur(userList[index].status, index, 'status')"
                         @value-changed="valueChangedBlur(userList[index].status, index, 'status')"
                       />
-                      <div class="tooltip-required width-105">trạng thái trống</div>
+                      <div class="tooltip-required width-105">Trạng thái trống</div>
                     </div>
                   </td>
 
-                  <td>
+                  <td :class="{'disable-icon': this.hideIconDelete()}">
                     <div class="flex m-8 height-50" >
-                      <!-- style="height: 50px" -->
                       <div class="style-button">
                         <div class="button-comand-wrap btn-more">
                           <div
@@ -177,16 +174,18 @@
 <script>
 import axios from "axios";
 import addUser from "@/js/services/user/addUser";
+import getListUser from "@/js/services/user/getListUser.js"
 import getNewUserCode from "@/js/services/user/getNewUserCode.js"
 import getDepartment from "@/js/services/departmentServices/getDepartment.js"
 import getRole from "@/js/services/role/getRole";
 import getPosition from "@/js/services/positonServices/getPosition.js"
+import Resources from "@/js/resources";
 export default {
     name: "AddUser",
     data(){
       return {
         index: 1, // số dòng trong bảng
-        userList: [], // mảng người dùng
+        userList: [], // mảng người dùng thêm mới
         departments: [], // mảng phòng ban
         positions: [], // mảng vị trí công việc
         roles: [], // mảng vai trò
@@ -194,6 +193,9 @@ export default {
         status: [{ID: 0, statusName:"Đang hoạt động"}, {ID: 1, statusName:"Chờ xác nhận"},
                 {ID: 2, statusName:"Chưa kích hoạt"}, {ID: 3, statusName:"Ngừng kích hoạt"} ],
         errorRequireds:[], // mảng validate dữ liệu
+        validateEmail: "", // thông báo lỗi validate email
+        errorValidateCode: "", // thông báo lỗi validate code
+        listUserCheckCode: [] // mảng người dùng lấy từ db dùng check trùng mã
       }
     },
 
@@ -213,29 +215,56 @@ export default {
          * Ngày tạo: 2/8/2022
          */
         addRow(){
-          var newUser = {};
-          newUser.roleID = [];
-          newUser.fullName = "";
-          newUser.departmentID = "";
-          newUser.positionID = "";
-          newUser.email = "";
-          newUser.status = null;
+          try {
+            // khai báo nhân viên mới
+            var newUser = Resources.newUser;
 
-          var oldUserCode = this.userList[this.userList.length-1].userCode;
-          var userCodeSplit = oldUserCode.split("-");
-          var newUserCode = parseInt(userCodeSplit[1]) + 1;
-          newUser.userCode = "NV-"+ newUserCode;
+            // thực hiện tăng mã người dùng
+            var oldUserCode = this.userList[this.userList.length-1].userCode;
+            var userCodeSplit = oldUserCode.split("-");
+            var newUserCode = parseInt(userCodeSplit[1]) + 1;
+            newUser.userCode = "NV-"+ newUserCode;
+            // Thêm người dùng vào trong mảng
+            this.userList.push(newUser);
 
-          // Thêm người dùng vào trong mảng
-          this.userList.push(newUser);
+            // khai báo mảng chứa validate từng field của người dùng
+            var newValidate = {
+              userCode: false, fullName: false, departmentID: false, positionID: false, role: false, email: false, status: false
+            };
+            this.errorRequireds.push(newValidate);
 
-          var newValidate = {
-            userCode: false, fullName: false, departmentID: false, positionID: false, role: false, email: false, status: false
-          };
-
-          this.errorRequireds.push(newValidate);
-          // this.$refs.dataGridAddUser.instance.refresh(true);
+            this.$nextTick(()=> this.$refs.txtUserCode[this.userList.length - 1].focus());
+                     
+          } catch (error) {
+            console.log("Có lỗi xảy ra khi thêm dòng dữ liệu.");
+          }
         }, 
+
+        /**
+         * Validate email đúng định dạng
+         * Người tạo: Khuất Quang Hoàng
+         * Ngày tạo: 16/8/2022
+         */
+        validateFormatEmail(email){
+          var validateRegex = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
+          if(!email.match(validateRegex))
+            return true;
+          return false;
+        },
+
+        /**
+         * Check trùng mã
+         * Người tạo: Khuất Quang Hoàng
+         * Ngày tạo: 16/8/2022
+         */
+         checkDuplicateCode(userCode){
+          var res = false;
+          this.listUserCheckCode.forEach(element => {
+            if(element.userCode == userCode)
+              res = true;
+          });
+          return res;
+        },
 
         /**
          * Xoá dòng
@@ -243,7 +272,11 @@ export default {
          * Ngày tạo: 16/8/2022
          */
         deleteUser(index){
-          this.userList.splice(index, 1);
+          try {
+            this.userList.splice(index, 1);
+          } catch (error) {
+            console.log("Có lỗi xảy ra khi thực hiện xoá dòng.");
+          }          
         },
         
          /**
@@ -252,25 +285,55 @@ export default {
          * Ngày tạo: 16/8/2022
          */
         blurColor(data, index, propertyName){
-          // debugger
-          if(data == ""){
+          try {
+            // Validate userCode
             if(propertyName == "userCode")
-              this.errorRequireds[index].userCode = true;
-            if(propertyName == "fullName")
-              this.errorRequireds[index].fullName = true;
-            if(propertyName == "email")
-              this.errorRequireds[index].email = true;
-          }
-          else
-          {
-            if(propertyName == "userCode")
-                this.errorRequireds[index].userCode = false;
-            if(propertyName == "fullName")
-              this.errorRequireds[index].fullName = false;
-            if(propertyName == "email")
-                this.errorRequireds[index].email = false;
-          }
+            {
+              if(data){       
+                if(this.checkDuplicateCode(data))
+                {
+                  this.errorRequireds[index].userCode = true;
+                  this.errorValidateCode = "Mã đã tồn tại";
+                }
+                else
+                  this.errorRequireds[index].userCode = false;
+              }
+              else{
+                  this.errorRequireds[index].userCode = true;
+                  this.errorValidateCode = "Mã người dùng trống";
+              }  
+            }
 
+            // Validate Email
+            if(propertyName == "email")
+            {
+              if(data){           
+                if(this.validateFormatEmail(data))
+                {
+                  this.errorRequireds[index].email = true;
+                  this.validateEmail ="Email chưa đúng định dạng";
+                }
+                else
+                  this.errorRequireds[index].email = false;
+              }
+              else{
+                  this.errorRequireds[index].email = true;
+                  this.validateEmail ="Email đang trống";
+              }  
+            }
+            
+            if(data == ""){
+              if(propertyName == "fullName")
+                this.errorRequireds[index].fullName = true;
+            }
+            else
+            {
+              if(propertyName == "fullName")
+                this.errorRequireds[index].fullName = false;
+            }
+          } catch (error) {
+            console.log("Có lỗi xảy ra khi thực hiện validate dữ liệu.");
+          }
         },
 
         /**
@@ -279,34 +342,36 @@ export default {
          * Ngày tạo: 20/8/2022
          */
         valueChangedBlur(data, index, propertyName){
+          try {
+            if(propertyName == 'departmentID'){
+              if(data == "")
+                this.errorRequireds[index].departmentID = true;
+              else
+                this.errorRequireds[index].departmentID = false;
+            }
 
-          debugger
-          if(propertyName == 'departmentID'){
-            if(data == "")
-              this.errorRequireds[index].departmentID = true;
-            else
-              this.errorRequireds[index].departmentID = false;
-          }
+            if(propertyName == 'positionID'){
+              if(data == "")
+                this.errorRequireds[index].positionID = true;
+              else
+                this.errorRequireds[index].positionID = false;
+            }
 
-          if(propertyName == 'positionID'){
-            if(data == "")
-              this.errorRequireds[index].positionID = true;
-            else
-              this.errorRequireds[index].positionID = false;
-          }
+            if(propertyName == 'roleID'){
+              if(data.length == 0)
+                this.errorRequireds[index].role = true;
+              else
+                this.errorRequireds[index].role = false;
+            }
 
-          if(propertyName == 'roleID'){
-            if(data.length == 0)
-              this.errorRequireds[index].role = true;
-            else
-              this.errorRequireds[index].role = false;
-          }
-
-          if(propertyName == 'status'){
-            if(data == null)
-              this.errorRequireds[index].status = true;
-            else
-              this.errorRequireds[index].status = false;
+            if(propertyName == 'status'){
+              if(data == null)
+                this.errorRequireds[index].status = true;
+              else
+                this.errorRequireds[index].status = false;
+            }
+          } catch (error) {
+            console.log("Có lỗi xảy ra khi thực hiện validate dữ liệu.");
           }
         },
 
@@ -316,14 +381,21 @@ export default {
          * Ngày tạo: 20/8/2022
          */
          validate(){
-          for(var i = 0; i < this.errorRequireds.length; i++)
+          try {
+            for(var i = 0; i < this.errorRequireds.length; i++)
           {
             if(this.userList[i].userCode == "")
             {
               this.errorRequireds[i].userCode = true;
+              this.errorValidateCode = "Mã người dùng trống";
             }
             else{
-              this.errorRequireds[i].userCode = false;
+              if(this.checkDuplicateCode(this.userList[i].userCode)){
+                this.errorRequireds[i].userCode = true;
+                this.errorValidateCode = "Mã đã tồn tại";
+              }
+              else
+                this.errorRequireds[i].userCode = false;
             }
 
             if(this.userList[i].fullName == ""){
@@ -347,22 +419,34 @@ export default {
 
             if(this.userList[i].email == ""){
               this.errorRequireds[i].email = true;
+              this.validateEmail ="Email đang trống";
             }
             else
-              this.errorRequireds[i].email = false;
+            {
+              if(this.validateFormatEmail(this.userList[i].email))
+              {
+                this.errorRequireds[i].email = true;
+                this.validateEmail ="Email chưa đúng định dạng";
+              }
+              else
+                this.errorRequireds[i].email = false;
+              }
+                
+              if(this.userList[i].roleID.length == 0){
+                this.errorRequireds[i].role = true;
+              }
+              else
+                this.errorRequireds[i].role = false;
 
-            if(this.userList[i].roleID.length == 0){
-              this.errorRequireds[i].role = true;
-            }
-            else
-              this.errorRequireds[i].role = false;
-
-            if(this.userList[i].status == null){
-              this.errorRequireds[i].status = true;
-            }
-            else
-              this.errorRequireds[i].status = false;
-          }   
+              if(this.userList[i].status == null){
+                this.errorRequireds[i].status = true;
+              }
+              else
+                this.errorRequireds[i].status = false;
+            }  
+          } catch (error) {
+            console.log("Có lỗi xảy ra khi thực hiện validate dữ liệu.");  
+          }
         },
 
         /**
@@ -371,113 +455,76 @@ export default {
          * Ngày tạo: 16/8/2022
          */
         async btnSubmit(){
-          var me = this;
-          // Validate dữ liệu
-          this.validate();
+          try {
+            var me = this;
+            // Validate dữ liệu
+            this.validate();
 
-          var isValid = true;
-          this.errorRequireds.forEach(element => {
-            for(var property in element){
-              if(element[property] == true)
-                {
-                  isValid = false;
-                  return;
-                }
+            var isValid = true;
+            this.errorRequireds.forEach(element => {
+              for(var property in element){
+                if(element[property] == true)
+                  {
+                    isValid = false;
+                    return;
+                  }
+              }
+            });
+
+            if(isValid){
+              // thêm mới dữ liệu bảng user
+              await addUser.addUser(me.userList, me);
             }
-          });
-
-          if(isValid){
-            // await axios
-            // .post(
-            //   ` https://localhost:44328/api/v1/Users/postAll`, me.userList
-            // )
-            // .then(function (res) {
-            //   // console.log(res);
-            //   me.$emit("reLoad");
-            //   me.$emit("closePopUp", false);
-            // })
-            // .catch(function (res) {
-            //   console.log(res);
-            // });
-            await addUser.addUser(me.userList, me);
+          } catch (error) {
+            console.log("Có lỗi xảy ra khi thực hiện thêm mới dữ liệu.");
           }
+        }, 
 
+        hideIconDelete(){
+          if(this.userList.length == 1)
+            return true;
+          return false;
         }
 
     },
     components: {  },
     async created(){
-      var me = this;
-      var newUser = {};
-      newUser.roleID = [];
-      newUser.fullName = "";
-      newUser.departmentID = "";
-      newUser.positionID = "";
-      newUser.email = "";
-      newUser.status = null;
+      try {
+        var me = this;
+        // Khai báo người dùng mới
+        var newUser = Resources.newUser;
 
-      var newValidate = {
-        userCode: false, fullName: false, departmentID: false, positionID: false, role: false, email: false, status: false
-      };
+        var newValidate = {
+          userCode: false, fullName: false, departmentID: false, positionID: false, role: false, email: false, status: false
+        };
 
-      this.errorRequireds.push(newValidate);
-      // lấy mã nhân viên mới
-        // await axios
-        // .get(
-        //   `https://localhost:44328/api/v1/Users/NewUserCode`
-        // )
-        // .then(function (res) {
-        //   me.newUserCode = res.data;
-        // })
-        // .catch(function (res) {
-        //   console.log(res);
-        // });
-      me.newUserCode = await getNewUserCode.getNewUserCode();
-      
-      newUser.userCode = this.newUserCode;
+        this.errorRequireds.push(newValidate);
 
-      // Thêm người dùng vào trong mảng
-      this.userList.push(newUser);
+        // lấy mã nhân viên mới
+        me.newUserCode = await getNewUserCode.getNewUserCode();
+        newUser.userCode = this.newUserCode;
 
-      // lấy dữ liệu cho mảng departments
-      // await axios
-      //   .get(
-      //     `https://localhost:44328/api/v1/Departments`
-      //   )
-      //   .then(function (res) {
-      //     me.departments = res.data;
-      //   })
-      //   .catch(function (res) {
-      //     console.log(res);
-      //   });
-      me.departments = await getDepartment.getDepartment();
+        // Thêm người dùng vào trong mảng
+        this.userList.push(newUser);
 
-        // lấy dữ liệu cho mảng positions
-        // await axios
-        // .get(
-        //   `https://localhost:44328/api/v1/Positions`
-        // )
-        // .then(function (res) {
-        //   me.positions = res.data;
-        // })
-        // .catch(function (res) {
-        //   console.log(res);
-        // });
+        // lấy dữ liệu cho mảng departments
+        me.departments = await getDepartment.getDepartment();
+
+        // lấy dữ liệu bảng vị trí
         me.positions = await getPosition.getPosition();
 
-         // lấy dữ liệu cho mảng roles
-        // await axios
-        // .get(
-        //   `https://localhost:44328/api/v1/Roles`
-        // )
-        // .then(function (res) {
-        //   me.roles = res.data;
-        // })
-        // .catch(function (res) {
-        //   console.log(res);
-        // });
+        // lấy dữ liệu cho mảng roles
         me.roles = await getRole.getRoleList();
-       
+
+        // lấy tất cả người dùng dùng kiểm tra trùng mã
+        this.listUserCheckCode = await getListUser.getListUser();
+
+        // focus vào ô mã người dùng
+        this.$nextTick(()=> this.$refs.txtUserCode[0].focus());
+              
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi tải dữ liệu về.");
+      } 
     }
 };
 </script>
@@ -498,6 +545,11 @@ export default {
   width: 230px;
 }
 
+.min-width-150{
+  min-width: 150px;
+  width: 150px;
+}
+
 .width-80{
   width: 80px;
 }
@@ -509,7 +561,9 @@ export default {
 .width-105{
   width: 105px;
 }
+
 .grid-container-add{
+  border: 1px solid #e7e8e9;
   overflow: auto !important;
   max-height: 500px;
 }
@@ -545,6 +599,10 @@ td input:focus-visible{
 td input:hover{
   border-color: var(--input-hover-border-color);
   outline: none;
+}
+
+tr td{
+  border-top: 1px solid #e7e8e9;
 }
 
 .invalid input:hover{
@@ -606,4 +664,17 @@ tbody td:last-child{
   display: flex;
   justify-content: center;
 }
+
+/* tbody>tr:hover .disable-icon{
+  display: none;
+} */
+
+.disable-icon{
+  display: none;
+}
+
+.max-width-230{
+  max-width: 230px;
+}
+
 </style>
