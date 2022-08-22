@@ -50,7 +50,8 @@
                   </td>
                   <td>
                     <div :class="{'invalid': this.errorRequireds[index].fullName == true}">
-                      <input type="text" class="w-full" v-model="userList[index].fullName" @blur="blurColor(userList[index].fullName, index, 'fullName')"/>
+                      <input type="text" class="w-full" v-model="userList[index].fullName" :maxlength="100"
+                       @blur="blurColor(userList[index].fullName, index, 'fullName')"/>
                       <div class="tooltip-required">Họ tên trống</div>
                     </div>
                   </td>
@@ -86,7 +87,8 @@
                   </td>
                   <td >
                     <div :class="{'invalid': this.errorRequireds[index].email == true}">
-                      <input type="text" class="w-full" v-model="userList[index].email" @blur="blurColor(userList[index].email, index, 'email')"/>
+                      <input type="text" class="w-full" v-model="userList[index].email" :maxlength="100" 
+                      @blur="blurColor(userList[index].email, index, 'email')"/>
                       <div class="tooltip-required width-80">{{validateEmail}}</div>
                     </div>
                   </td>
@@ -180,6 +182,7 @@ import getDepartment from "@/js/services/departmentServices/getDepartment.js"
 import getRole from "@/js/services/role/getRole";
 import getPosition from "@/js/services/positonServices/getPosition.js"
 import Resources from "@/js/resources";
+import User from "@/js/user.js"
 export default {
     name: "AddUser",
     data(){
@@ -216,8 +219,9 @@ export default {
          */
         addRow(){
           try {
+            debugger
             // khai báo nhân viên mới
-            var newUser = Resources.newUser;
+            var newUser = new User();
 
             // thực hiện tăng mã người dùng
             var oldUserCode = this.userList[this.userList.length-1].userCode;
@@ -492,7 +496,7 @@ export default {
       try {
         var me = this;
         // Khai báo người dùng mới
-        var newUser = Resources.newUser;
+        var newUser = new User();
 
         var newValidate = {
           userCode: false, fullName: false, departmentID: false, positionID: false, role: false, email: false, status: false

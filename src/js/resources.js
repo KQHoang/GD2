@@ -23,17 +23,5 @@ var Resources = {
         NotActiveName: "Chưa kích hoạt",
         DeActivationName: "Ngừng kích hoạt"
     },
-
-    // Người dùng mới
-    newUser: {
-        roleID: [],
-        fullName: "",
-        departmentID: "",
-        positionID: "",
-        email: "",
-        status: null,
-        userCode: ""
-    }
-
 }
 export default Resources;

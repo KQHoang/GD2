@@ -13,6 +13,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import GridUser from './view/user/TableUser.vue'
 import HLoading from './components/base/BLoading.vue'
 import DxTextBox from 'devextreme-vue/text-box';
+import MSKeyListener from './components/base/KeyListener.vue'
 import {
     DxDataGrid,
     DxColumn
@@ -41,4 +42,5 @@ app.component("ProfileImage", ProfileImage)
 app.component("DxPopup", DxPopup)
 app.component("DxTagBox", DxTagBox)
 app.component("HLoading", HLoading)
+app.component("MSKeyListener", MSKeyListener)
 app.use(router).mount('#app')

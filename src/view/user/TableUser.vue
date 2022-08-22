@@ -369,6 +369,7 @@
   
    <CustomizeTable @closeCustomizeTable="closeCustomizeTable" v-if="isShowCustomize"
           :columnVisible="columnVisible" @columnCustomizeTable="columnCustomizeTable"/>
+  <MSKeyListener @keyup="closeKeyUp($event)"/>
 </template>
 
 <script>
@@ -593,6 +594,24 @@ export default {
         this.getPaging(this.keySearch);
       } catch (error) {
         console.log("Có lỗi xảy ra khi thực hiện phân trang");
+      }
+    },
+
+    /**
+     * ấn nút ESC ẩn
+     * Người tạo: Khuất Quang Hoàng 
+     * Ngày tạo: (10/8/2022)
+     */
+    closeKeyUp(event){
+      try {
+        if(event.which == 27){
+          this.isShowAdd = false;
+          this.showPopUp = false;
+          this.isShowDetail = false;
+          this.isShowCustomize = false;
+        }
+      } catch (error) {
+        console.log("Có lỗi xảy ra khi nhấn nút ESC");
       }
     },
 
